@@ -1,0 +1,50 @@
+# Inductor configuration. Every path is relative to this file.
+# Full reference: https://github.com/NaomiAmethyst/inductor/blob/main/docs/configuration.md
+apiVersion: inductor/v1
+kind: Config
+
+paths:
+  sources: sources          # source records, one YAML per creator
+  content: content          # the library Inductor writes into
+  media: media              # audio and artwork, placed where the site can serve them
+  covers: media/cover
+  cache: cache/inductor     # disposable: indexes, measurements, queues, journals
+  decisions: state/decisions
+  state: state              # transcripts and enrichment; expensive, keep it
+
+media:
+  # symlink keeps one copy of the audio. hardlink and copy also work; hardlink
+  # falls back to symlink across filesystems.
+  mode: symlink
+  transcode: if-needed      # never | if-needed | always
+
+transcribe:
+  # An SSH host with a GPU, or "" for a local CPU worker. The first run builds
+  # the worker's virtualenv and downloads the model.
+  remote: ""
+  remote_dir: ~/inductor-stt
+  model: distil-large-v3
+  language: en
+  batch_size: 16
+  workers: 6
+
+enrich:
+  # Any model your OpenRouter account can reach. A :batch suffix on the review
+  # model routes it through OpenRouter's batch API, which is cheaper and slower.
+  analysis_model: deepseek/deepseek-v4-flash
+  review_model: google/gemini-3.8-flash:batch
+  adjudicator_model: anthropic/claude-opus-5
+  workers: 12
+  batch_size: 150
+
+  # The key is looked up as OPENROUTER_API_KEY, then key_file, then
+  # ~/.config/openrouter/key, then ~/.openrouter-key. Set one of them.
+  # key_file: ~/.config/openrouter/key
+
+  # Cover art needs a running ComfyUI. Leave covers off until you have one;
+  # `inductor run --no-covers` skips it for a single run either way.
+  covers: false
+  comfy_url: http://127.0.0.1:8188
+  cover_engine: turbo       # turbo | sdxl | flux
+  cover_width: 1024
+  cover_height: 576

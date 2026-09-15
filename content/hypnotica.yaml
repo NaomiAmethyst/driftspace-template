@@ -1,0 +1,20 @@
+# Hypnotica site configuration. Lives at the root of the content tree.
+# Full reference: https://github.com/NaomiAmethyst/hypnotica/blob/main/docs/contracts.md
+apiVersion: hypnotica/v1
+kind: Config
+
+site:
+  title: Hypnotica                                   # change these three
+  tagline: A library of spoken-audio recordings.
+  description: A personal archive, with write-ups, tags and transcripts.
+
+  # Set this to the real URL before publishing: the feeds and the offline app
+  # bake it in. `build --base-url` overrides it for one build.
+  base_url: http://localhost:8080
+  theme_color: '#6633cc'
+  # icon: images/site.png
+
+paths:
+  assets: .                      # asset paths resolve against the content tree
+  cache: ../cache/hypnotica      # disposable
+  transcripts: ../state/transcripts
