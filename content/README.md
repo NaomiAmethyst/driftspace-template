@@ -95,7 +95,7 @@ they are not in the registry. They sit there until `inductor adjudicate` rules.
 ## Tags
 
 `tags.yaml` is the registry, and the **only** source of tags. A tag that is not
-in it never reaches an item. Seven kinds:
+in it never reaches an item. Eight kinds:
 
 ```
 Voice: fem            how the speaker presents
@@ -104,6 +104,7 @@ Induction: Fixation   how trance is brought on
 Production: Whispers  how the audio was made
 Trigger: Sink         a cue it installs            (behind the spoiler gate)
 Compulsion: Relisten  a drive it leaves behind     (behind the spoiler gate)
+CW: Death             what it touches on rather than is about
 Femdom                what happens in it — a bare tag, no prefix
 ```
 
@@ -120,6 +121,13 @@ inductor adjudicate --apply --write      # after reading the rulings
 Letting unruled tags sit on items is how 874 unregistered spellings accumulated
 across 558 items in one library. `state/decisions/` is where the rulings live and
 why.
+
+**Quote any tag name YAML would read as a number or a boolean** — `'69'`, not
+`69`. One unquoted numeric key makes its entire block parse as a non-string map,
+which Inductor reads as empty: every tag in that block silently stops resolving,
+and a registry write can then overwrite the block with nothing. Check with
+`inductor` itself rather than by eye — a source record tagged with something you
+know is registered should come back in `tags:`, not in `provenance.proposed_tags`.
 
 Two distinctions in the shipped registry are load-bearing:
 

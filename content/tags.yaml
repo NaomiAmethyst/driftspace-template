@@ -1,12 +1,28 @@
+# The tag registry: the only tags that may reach an item.
+#
+# A starting point, not a standard. Cut what does not apply to your library,
+# rename what your creators call something else, and add through the pipeline —
+# `inductor tagmap` for a creator's vocabulary, `inductor adjudicate` for what a
+# run proposes — so the decision is recorded in state/decisions/ rather than
+# just happening.
+#
+# Eight kinds. The seven prefixed ones answer a fixed question about every
+# recording; `content` is the open one. Keep the prefixed lists short: a
+# vocabulary that fits in the head is one people actually use.
+#
+# Quote any tag name YAML would read as a number or a boolean — '69', not 69.
+# An unquoted numeric key makes its whole block unreadable to Inductor.
 apiVersion: hypnotica/v1
 kind: Tags
+
 voice:
   _about: The speaker's gender expression. Not a claim about anyone's body.
   fem: Speaker presents feminine.
   masc: Speaker presents masculine.
   transfem: Speaker presents transfeminine.
-  androgynous: Speaker's presentation is deliberately neither, or unreadable.
   transmasc: Speaker presents transmasculine.
+  androgynous: Speaker's presentation is deliberately neither, or unreadable.
+
 audience:
   _about: Who the recording addresses. Use anyone when it does not say.
   man: Addressed to a man.
@@ -22,161 +38,221 @@ audience:
   enby: Addressed to a nonbinary listener.
   couple: Addressed to two listeners together.
   anyone: No gendered address, or explicitly open to all.
+
 induction:
   _about: How the recording brings on trance. One per file unless it genuinely switches.
+  Nothing: No induction. The recording begins in scene or speech.
   Conversational: Trance arrives through ordinary talk, with no announced induction.
-  Fixation: Attention held on one object, image or body part until focus narrows.
-  Visualisation: A guided scene the listener builds and descends into.
+  Covert: Trance induced without naming it, on a listener not told to expect it.
   Ericksonian: Indirect, permissive suggestion; metaphor and implication rather than command.
   Betty Erickson: The self-hypnosis pattern of naming things seen, heard and felt, counting down each pass.
+  Elman: The rapid clinical induction — eye catalepsy, then a deepening count.
+  Fixation: Attention held on one object, image or body part until focus narrows.
+  Visualisation: A guided scene the listener builds and descends into.
+  Gateway: Passage through an imagined door, gate or threshold into trance.
+  Counting: A counted descent, usually downward, each number deepening.
+  Breathing: Paced or directed breath used to carry the listener down.
+  Progressive Muscle Relaxation: Tense and release each muscle group in turn.
+  Repetition: The same phrase or cadence repeated until it stops being parsed.
   Yes Set: A run of statements the listener cannot help agreeing with, so the next one lands.
   Confusion: Deliberate overload of contradictory or tangled instruction until the mind gives up tracking.
-  7+/-2: Confusion by holding more items in mind than working memory allows.
-  Overload: Several channels at once — counting while visualising while breathing.
-  Progressive Muscle Relaxation: Tense and release each muscle group in turn.
-  Counting: A counted descent, usually downward, each number deepening.
-  Repetition: The same phrase or cadence repeated until it stops being parsed.
-  Shock: An abrupt word or sound that drops the listener without warning.
-  Covert: Trance induced without naming it, on a listener not told to expect it.
+  Overload: Several channels at once — counting while visualising while breathing, past what attention holds.
   Fractionation: Repeatedly surfacing and dropping again, each pass going deeper.
   Hand Drop: The hand held up, falling as trance takes hold.
-  Gateway: Passage through an imagined door, gate or threshold into trance.
-  Elman: The rapid clinical induction — eye catalepsy, then a deepening count.
+  Shock: An abrupt word or sound that drops the listener without warning.
   Brainwashing: The induction is itself the conditioning; repetition and assertion, not relaxation.
-  Nothing: No induction. The recording begins in scene or speech.
+
 production:
   _about: How the audio was made or delivered — not what happens in it.
-  Subliminals: Content mixed below conscious hearing, whether or not it works.
   ASMR: Deliberate tingle-triggering sound design.
   Whispers: Delivered wholly or largely in a whisper.
+  Softly Spoken: Quiet, close delivery, short of whispering.
+  Breathy: Audible breath used as texture.
+  Accent: An accent is part of the delivery.
+  Fast Speech: Deliberately rapid delivery.
+  Sleepy Voice: A just-woken or drowsy voice.
+  Tone Shift: The speaker's register changes deliberately mid-file.
+  Processed Voice: The voice is digitally altered — pitch-shifted, robotic or otherwise effected.
+  Synthesised: Voice generated rather than recorded.
+  Layered Voices: More than one voice track at once, overlapping.
+  Ear to Ear: Sound moving between the ears, close on each side.
+  Spatial Audio: Positional audio that moves around the listener.
   Binaural: Two tones offset between channels to produce a beat frequency.
-  Haptics: Sound designed to be felt, usually low frequency, often with a toy.
-  Loop: Built to repeat seamlessly, with no beginning or end.
-  Affirmations: A list of statements to absorb or repeat, rather than a scene.
-  Singing: The speaker sings.
+  No Binaural: States it contains no binaural content.
+  Subliminals: Content mixed below conscious hearing, whether or not it works.
+  No Subliminals: States it contains no subliminal content.
   Music: Scored with music under the voice.
   Background: Ambient environment audio under the voice.
   Soundscape: The environment is the content, not a bed under speech.
   Sound Effects: Discrete effects used to stage action.
-  Synthesised: Voice generated rather than recorded.
-  360: Positional audio that moves around the listener.
-  Layered Voices: More than one voice track at once, overlapping.
   Wet Sounds: Close mouth and body sounds foregrounded.
-  Tone Shift: The speaker's register changes deliberately mid-file.
+  Echo: Echo or reverb used as an effect.
+  Haptics: Sound designed to be felt, usually low frequency, often with a toy.
+  Naked Audio: Voice alone, with no music, effects, ambience or processing added.
+  Singing: The speaker sings.
+  No Speech: Contains no words; voice sound or ambience alone.
+  Monologue: One unbroken solo address, with no scene, dialogue or interaction.
+  Affirmations: A list of statements to absorb or repeat, rather than a scene.
+  Mantras: Phrases given for the listener to say back.
+  Loop: Built to repeat seamlessly, with no beginning or end.
+  Live: Recorded in one unedited take, or captured from a live session.
+  Improvised: Unscripted, made up as it goes.
   Script Fill: The speaker is performing someone else's script.
   Collab: More than one creator performs.
+  Bilingual: Two languages are used within the recording.
   Aphantasia-Friendly: Written to work without the listener picturing anything.
-  Softly Spoken: Quiet, close delivery, short of whispering.
-  Breathy: Audible breath used as texture.
-  Echo: Echo or reverb used as an effect.
-  Mantras: Phrases given for the listener to repeat back.
-  No Binaural: States it contains no binaural content.
-  No Subliminals: States it contains no subliminal content.
-  Naked Audio: Voice alone, with no music, effects, ambience or processing added.
+
 compulsion:
   _about: A drive the recording means to leave behind, aimed at an action in the world.
   Relisten: Play this recording again, often on a schedule or when a feeling arrives.
+  Edge: Approach orgasm without finishing, later and away from the recording.
+  Abstain: Hold off from release, or from touching at all, until permitted.
   Contact: Get in touch with the creator.
   Spend: Buy, tip or tribute.
   Share: Pass the recording or the trigger to someone else.
+
 trigger:
-  _about: 'A cue the recording installs so that later, outside the session, the cue produces the effect. Name the
-    trigger by its cue word. Descriptions here are the common usage across this library; a given file may bind the
-    same word to something else, so the item''s own spoiler text is what governs.'
+  _about: >-
+    A cue the recording installs so that later, outside the session, the cue
+    produces the effect. Name the trigger by its cue word. Descriptions here are
+    the common usage; a given file may bind the same word to something else, so
+    the item's own spoiler text is what governs.
   Drop: Drops the listener into trance on the word.
   Sink: Deepens trance; sinking down further on the word.
-  Sink for Me: As Sink, bound to the speaker saying it.
   Deeper: Deepens trance a step on the word.
   Fall: Drops the listener, framed as falling.
   Click: A snap or click that drops or switches state instantly.
-  Bubble Pop: A pop sound used as the drop cue.
-  Go Blank: Empties thought on the word.
-  Mindless: Thought stops; the listener becomes blank and compliant.
-  Losing: Progressive loss of thought or will on the cue.
   Blank: Thought stops on the word.
-  Rise: Brings the listener up out of trance a step.
-  Pop: Returns the listener to waking, or pops a state.
-  Break: Cancels a state or trigger; the safety cue in many files.
-  Game Over: Ends a scene or state abruptly.
-  Play/Pause: Starts and stops a state like a transport control.
+  Mindless: Thought stops and the listener becomes compliant with it.
+  Bliss: Floods the listener with pleasure on the word.
   Freeze: Holds the listener still on the word.
+  Play/Pause: Starts and stops a state like a transport control.
   Focus and Obey: Narrows attention and produces compliance together.
   Take Control: Hands control of the listener over on the cue.
-  Obedience is Pleasure: Obeying produces pleasure, so compliance self-reinforces.
-  Good Sub: Praise cue producing pleasure and reinforcement.
-  Good Boys Obey: Praise cue tied to compliance, addressed to a male listener.
-  Good Girl/Princess: Praise cue producing pleasure, addressed to a female listener.
-  Good Dog: Praise cue in a pet-play frame.
-  Good Bunny: Praise cue in a bunny pet-play frame.
-  Good Enby: Praise cue producing pleasure and reinforcement, addressed to a nonbinary listener.
-  Bliss: Floods the listener with pleasure on the word.
-  Voice: The speaker's voice itself is the cue.
-  Volume: Loudness of the voice is the cue.
-  Speak: Compels speech from the listener.
+  Good Girl: Praise cue producing pleasure, addressed to a female listener.
+  Good Boy: Praise cue producing pleasure, addressed to a male listener.
+  Good Sub: Praise cue producing pleasure and reinforcement, ungendered.
+  Good Enby: Praise cue producing pleasure, addressed to a nonbinary listener.
+  Stroke: Compels the listener to touch themselves.
+  Cum: Produces orgasm on the word.
   Drip: Produces wetness or leaking on the word.
+  Beg: Produces begging from the listener.
+  Speak: Compels speech from the listener.
   Sleep: Sends the listener into sleep on the word.
+  Voice: The speaker's voice itself is the cue.
+  Rise: Brings the listener up out of trance a step.
+  Pop: Returns the listener to waking, or pops a state.
+  Wake: Returns the listener fully to waking.
+  Break: Cancels a state or trigger; the safety cue in many files.
+
 cw:
-  _about: 'Things a recording mentions or brushes against rather than dwells on. A
+  _about: >-
+    Things a recording mentions or brushes against rather than dwells on. A
     content tag says what the recording is; a CW says what a listener might want
-    warning of before pressing play.'
-  Blood: Blood appears, as something the recording touches on rather than dwells on.
-  Death: Death, dying or bereavement, as something the recording touches on.
-  Self-Harm: Self-harm, cutting or the urge to, as something the recording touches on.
-  Stalking: Stalking or being followed, as something the recording touches on.
+    warning of before pressing play.
+  Blood: Blood appears, as something the recording touches on.
+  Gore: Graphic injury or viscera, as something the recording touches on.
   Violence: Violence done to a character or the listener, as something the recording touches on.
+  Death: Death, dying or bereavement, as something the recording touches on.
+  Suicide: Suicide or suicidal feeling, as something the recording touches on.
+  Self-Harm: Self-harm, cutting or the urge to, as something the recording touches on.
+  Non-Consent: Consent withheld, ignored or absent, as something the recording touches on.
+  Incest: Family sexual contact, as something the recording touches on.
+  Sadism: Cruelty or enjoyment of suffering, as something the recording touches on.
+  Stalking: Stalking or being followed, as something the recording touches on.
+  Drugs: Drugs or intoxication, as something the recording touches on.
+  Needles: Needles or injections, as something the recording touches on.
+  Disordered Eating: Dieting, weight or food restriction, as something the recording touches on.
+  Pregnancy: Pregnancy or its risk, as something the recording touches on.
+
 content:
-  _about: 'What happens in the recording, or what it is about. No prefix. Prefer an existing entry that is merely
-    close over a new tag that is exact.'
+  _about: >-
+    What happens in the recording, or what it is about. No prefix. Prefer an
+    existing entry that is merely close over a new tag that is exact — a
+    vocabulary of near-synonyms is worse than a coarse one, because nothing
+    filters on it.
+
+  # Power and dynamic
   Femdom: A woman holds the power in the scene.
+  Mdom: A man holds the power in the scene.
   Gentle Femdom: Femdom delivered warmly — encouragement rather than degradation.
   Evil Domme: The domme is malicious and says so; the harm is the appeal.
   Femsub: The listener or a character is a submissive woman.
   MSub: The listener or a character is a submissive man.
   Submission: The listener is asked to yield.
-  Submissive Woman: The listener is addressed as a submissive woman.
+  Service: Duties performed for the dominant, service itself being the submission.
   Direct Dominance: Plain commands, no seduction or framing.
+  High Protocol: Formal rules of address, posture and permission, enforced throughout.
   Non-Dominant: No power exchange; the speaker is a peer.
-  Sub to Dom: The power relation reverses over the file.
-  Role Reversal: Established roles swap.
   Switching: The speaker moves between dominant and submissive.
+  Sub to Dom: The power relation reverses; the submissive party ends up holding it.
+  Dom to Sub: The dominant party yields over the file, ending as the submissive one.
+  Role Reversal: Established roles swap.
   Female Supremacy: Women are framed as inherently superior.
+  Brat: A submissive who resists playfully.
+  Punishment: Correction as the frame.
+  Praise: Approval as reward.
+  Encouragement: Urging the listener on warmly.
+  BDSM: Bondage, discipline, dominance and submission as a practice.
+
+  # Worship, ownership, objectification
+  Worship: Reverent attention to a person.
   Goddess Worship: The speaker is worshipped as divine.
-  Worship: Reverent attention to a person or body.
   Body Worship: Reverent attention to the body.
   Breast Worship: Reverent attention to breasts.
   Cock Worship: Reverent attention to a penis.
+  Pussy Worship: Reverent attention to a vulva.
   Ass Worship: Reverent attention to the arse.
   Foot Worship: Reverent attention to feet.
-  Cock Appreciation: Admiring a penis, short of worship.
   Simp: The listener is framed as devoted and giving without return.
+  Findom: Money as the submission.
   Slave: The listener is framed as owned property.
   Enslavement: The recording works to make the listener owned.
-  Slave Training: Structured conditioning toward service.
-  Treasure Training: Creator-specific training series.
+  Collar: A collar as the mark of ownership.
+  Leash: A lead attached to a collar.
+  Branding: The listener is marked as owned — branded, burned or stamped.
+  Contract: A signed or spoken agreement binding the listener, consenting on paper being the surrender.
+  Possessive: The speaker claims the listener.
+  Only Me: Attention restricted to this creator.
+  Objectification: The listener is treated as an object.
+  Dehumanisation: The listener is reduced to a thing or function.
+  Furniture Play: The listener is used as furniture — footstool, table, seat.
+  Puppet: The listener is moved as if on strings.
+  Statue: The listener is turned to stone or posed as a statue.
+  Drone: The listener becomes a blank, numbered, interchangeable unit.
+  Hive Mind: A shared collective mind the listener joins.
+  Mass Hypnosis: Addressed to many listeners at once as a group.
+  Robot: The listener is or becomes a machine.
+  Fembot: The listener becomes a feminine robot.
+  AI: An artificial intelligence is a character.
+
+  # Training, programming, conditioning
   Training: Structured, repeated conditioning toward a skill or state.
-  Stamina Training: Training to last longer.
+  Conditioning: Pairing a cue with a response until it is automatic.
+  Slave Training: Structured conditioning toward service.
+  Dominance Training: The listener is trained to dominate rather than submit.
   Chastity Training: Training toward accepting denial.
+  Stamina Training: Training to last longer.
   HFO Training: Training toward hands-free orgasm.
   Clicker Training: Conditioning with a clicker as the marker.
   Trigger Install: The file's purpose is to install a trigger.
   Shareable Triggers: Triggers others may use on the listener.
+  Suggestion Removal: The file's purpose is to remove suggestions or triggers installed earlier.
   Programming: Installing a routine the listener runs later.
   Personality Program: Installing a persona the listener switches into.
-  Mass Hypnosis: Addressed to many listeners at once as a group.
-  Serial Recruitment: The listener is directed to bring others in.
-  Hive Mind: A shared collective mind the listener joins.
-  Drone: The listener becomes a blank, numbered, interchangeable unit.
-  Dehumanisation: The listener is reduced to a thing or function.
-  Objectification: The listener is treated as an object.
-  Puppet: The listener is moved as if on strings.
-  Robot: The listener is or becomes a machine.
-  Fembot: The listener becomes a feminine robot.
-  AI: An artificial intelligence is a character.
-  Virtual Goddess: A digital or AI domme figure.
-  Hypnosis: Contains hypnosis. Most files here do; use it when it is the point.
+  Sleeper Agent: The listener is conditioned to lie dormant until a cue activates them.
+  Recursive: Suggestion that refers back to itself, each pass reapplying the last.
+  Brainwashing: Repetition and assertion used to overwrite belief.
+  Mind Control: Control over thought, framed as such.
+  Post-Hypnotic Suggestion: A suggestion meant to act after the file ends.
+
+  # Hypnosis and trance
+  Hypnosis: Contains hypnosis. Most files in a library like this do; use it when it is the point.
   Erotic Hypnosis: Hypnosis where arousal is the method, not just the subject.
   Covert Hypnosis: Trance induced on someone not told it is happening.
-  Hypno Quickie: A short file, trance to effect in minutes.
+  Stage Hypnosis: Hypnosis performed as a show, before an audience.
+  Hypnotherapist: A hypnotherapist character, in a clinical or consulting frame.
+  Guided Meditation: Framed as meditation rather than hypnosis — attention and rest with no suggestion agenda.
   Trance: Being in trance is the substance of the file.
   Deep Trance: The file works to go unusually deep.
   Waking Trance: Trance without closed eyes or relaxation.
@@ -185,564 +261,409 @@ content:
   Countdown: A counted descent or ending.
   Counting: Counting used as technique.
   Amnesia: The listener is suggested to forget something.
-  No Wakener: The file does not bring the listener back.
   Wakener: The file ends by returning the listener to waking.
-  Post-Hypnotic Suggestion: A suggestion meant to act after the file ends.
-  Mind Control: Control over thought, framed as such.
-  Brainwashing: Repetition and assertion used to overwrite belief.
-  Conditioning: Pairing a cue with a response until it is automatic.
-  Compulsive Masturbation: Conditioned inability to stop touching.
-  Addiction: The file frames itself or the speaker as addictive.
-  Obsession: Fixation on the speaker or an idea.
-  Corruption: Moving the listener toward what they would have refused.
-  Gaslighting: The listener's perception is deliberately undermined.
-  Mind Fuck: Deliberate disorientation as the point.
-  Reality Distortion: Perception of the real world is altered.
-  Madness: Loss of sense framed as the goal.
-  IQ Reduction: The listener is made to feel less able to think.
-  Bimbo: Feminine, sexual and deliberately unthinking.
-  Time Dilation: Time is suggested to stretch or compress.
-  Inner Universe: An imagined interior world the listener enters.
-  Identity Play: The listener's sense of who they are is altered.
-  Change: Lasting alteration is the stated aim.
-  Transformation: The listener becomes something else.
-  Body Control: Control asserted over the listener's movement.
+  No Wakener: The file does not bring the listener back.
+  Hidden Observer: The part of the listener's mind that stays watching outside trance is addressed directly.
+  Beginner: Written for someone new to hypnosis.
+  Instructional: Teaches a technique rather than performing one.
+  Experiment: Framed as trying something to see what happens.
+  Challenge: A task framed as a test.
+  Task: The listener is set something to do after the file.
+  Physical Interaction: The listener is asked to move or act.
+  Repeat After Me: The listener is asked to say words aloud.
+  Make Noise: The listener is required to be audible.
+
+  # Mechanisms and devices
+  Spirals: A spiral image used as the hypnotic focus.
+  Pocketwatch: The classic swinging watch.
+  Pendant: A swinging pendant as the focus.
+  Metronome: A beat used as the focus or pacing device.
+  Finger Snaps: Snapping used as a cue or punctuation.
+  Tapping: Rhythmic tapping as technique.
+  Eye Contact: Holding the speaker's gaze.
+  Glowing Eyes: Luminous eyes as the hypnotic device.
+  Quicksand: Sinking imagery used for trance.
+  Falling: Falling imagery used for trance.
+  Magic: Supernatural mechanism rather than hypnosis.
+  Drugging: A drug or potion is the mechanism of compliance or arousal.
+  Energy Draining: Vitality drawn out of the listener.
+  Phantom Touch: Touch suggested so it is felt without contact.
+  Mind Pussy: An imagined erogenous zone located in the mind, made the site of sensation.
+  Mind Reading: The speaker knows the listener's thoughts.
+  Reverse Psychology: Telling the listener not to, to make them.
+
+  # Mind states and alteration
   Helplessness: Inability to act, as a feeling.
-  Freeze: The listener is held still.
+  Body Control: Control asserted over the listener's movement.
   Resistance Play: Resisting is invited, then overcome.
   Reluctance: The listener is framed as unwilling.
   Forced: Framed as against the listener's will.
-  Curse: A suggestion framed as a curse.
-  Energy Draining: Vitality drawn out of the listener.
-  Pheromones: Scent framed as the mechanism of control.
-  Animal Magnetism: Irresistible attraction framed as a force.
-  Magic: Supernatural mechanism rather than hypnosis.
-  Quicksand: Sinking imagery used for trance.
-  Falling: Falling imagery used for trance.
-  Pocketwatch: The classic swinging watch.
-  Pendant: A swinging pendant as the focus.
-  Eye Contact: Holding the speaker's gaze.
-  Glowing Eyes: Luminous eyes as the hypnotic device.
-  Eyes: Eyes as the focus of attention.
-  Holding Chin: The chin held to direct the gaze.
-  Finger Snaps: Snapping used as a cue or punctuation.
-  Tapping: Rhythmic tapping as technique.
-  Repeat After Me: The listener is asked to say words aloud.
-  Mantras: Phrases repeated back.
-  Task: The listener is set something to do after the file.
-  Challenge: A task framed as a test.
-  Experiment: Framed as trying something to see what happens.
-  Instructional: Teaches a technique rather than performing one.
-  Beginner: Written for someone new to hypnosis.
-  Self-Improvement: Aimed at a benefit outside sex.
-  Relaxation: Rest is the purpose.
-  Sleep: Intended to send the listener to sleep.
-  Dreams: Dreams are the subject or the target.
-  Aftercare: Care and reassurance after a scene.
-  Comforting: Reassurance is the substance.
-  JOI: Instructions for how and when to touch.
-  JOE: Jerk-off encouragement without strict instruction.
-  Masturbation: The listener is told or expected to touch.
-  Mutual Masturbation: Speaker and listener touch together.
-  Layered Masturbation: Several masturbation tracks layered at once.
+  Free Use: The listener's body is available at any time without asking.
+  Corruption: Moving the listener toward what they would have refused.
+  Addiction: The file frames itself or the speaker as addictive.
+  Obsession: Fixation on the speaker or an idea.
+  Compulsive Masturbation: Conditioned inability to stop touching.
   Gooning: Extended mindless stroking as the goal.
-  Edging: Approaching orgasm and stopping.
-  Tease and Denial: Arousal built deliberately without release.
-  Teasing: Arousal provoked and withheld.
-  Orgasm Control: The speaker decides whether and when.
-  Orgasm Denial: Release refused.
-  Cum Command: Orgasm on command.
-  Hands-Free Orgasm: Orgasm without touch.
-  Ruined Orgasm: Release interrupted so it disappoints.
-  Muffled Orgasm: The listener must stay quiet through it.
-  Hold the Moan: Sound must be suppressed.
-  Multiple Orgasms: More than one, as the point.
-  Forced Orgasms: Orgasm demanded past comfort.
-  Arousal: Arousal itself is the subject.
-  Cum Lust: Craving for semen.
-  Cum Eating Instruction: Instruction to consume semen.
-  Cum Eating: Consuming semen.
-  Cumplay: Play with semen.
-  Creampie: Ejaculation inside.
-  Impreg: Pregnancy as the fantasy.
-  Facial: Ejaculation on the face.
-  Chastity: Release is locked away.
-  Denial: See Orgasm Denial.
-  Desperation: Need past the point of comfort.
-  Desperate: The listener is framed as desperate.
-  Needy: Neediness as the state.
-  Desire: Wanting as the subject.
-  Sexual Tension: Unreleased charge between people.
-  Slow Build: Deliberate, unhurried escalation.
-  Erotic: Sexual without explicit act.
-  Explicit: Sex acts described plainly.
-  Extreme: Goes further than most files here.
-  Dark: Deliberately unpleasant or frightening content.
-  Filthy: Coarse language and imagery as the appeal.
-  Sex: Intercourse.
-  Blowjob: Oral on a penis.
-  Sloppy Blowjob: Blowjob with wet, loud sound.
-  Deep Throat: Taking a penis to the throat.
-  Face Fucking: Thrusting into the mouth.
-  Ball Sucking: Oral on testicles.
-  Cunnilingus: Oral on a vulva.
-  Face Sitting: Sitting on the partner's face.
-  Face Riding: Riding the partner's face.
-  Handjob: Manual stimulation of a penis.
-  Footjob: Stimulation with feet.
-  Titjob: Stimulation between breasts.
-  Fingering: Manual penetration.
-  Anal: Anal sex or play.
-  Pegging: The listener is penetrated with a strap-on.
-  Double Penetration: Two at once.
-  Outercourse: Contact without penetration.
-  No Penetration: Explicitly none.
-  Dry Humping: Friction through clothing.
-  Riding: The partner on top.
-  Riding You: The speaker rides the listener.
-  Cowgirl: Straddling, facing.
-  Girl on Top: The woman on top.
-  Making Out: Extended kissing.
-  Kissing: Kissing.
-  Licking: Licking.
-  Biting: Biting.
-  Groping: Grabbing and handling.
-  Massage: Massage.
-  Nipple Play: Attention to nipples.
-  Breast Play: Attention to breasts.
-  Clit Slaps: Striking the clitoris.
-  Spanking: Striking the arse.
-  Impact Play: Striking, as a practice.
-  Pain Play: Pain as the appeal.
-  Knife Play: A blade as the prop.
-  Choking: Pressure on the throat.
-  Breath Play: Restricting breath.
-  Tickling: Tickling.
-  Bondage: Restraint.
-  Handcuffs: Cuffs as the restraint.
-  Leash: A lead attached to a collar.
-  Collar: A collar as the mark of ownership.
-  Kneeling: The listener kneels.
-  On All Fours: The listener on hands and knees.
-  Punishment: Correction as the frame.
-  Name Calling: Insults used deliberately.
-  Humiliation: Being brought low, as the appeal.
-  Degradation: Being demeaned, as the appeal.
-  Self Degradation: The listener demeans themselves.
-  Shame: Shame as the feeling worked with.
-  Small Penis Humiliation: Humiliation about penis size.
-  Limp Clitty: The penis renamed and framed as useless.
-  Impotence: Suggested inability to get hard.
-  Praise: Approval as reward.
-  Encouragement: Urging the listener on warmly.
-  Perv Encouragement: Approval for being perverse.
+  Mind Fuck: Deliberate disorientation as the point.
+  Gaslighting: The listener's perception is deliberately undermined.
+  Reality Distortion: Perception of the real world is altered.
+  Time Dilation: Time is suggested to stretch or compress.
+  Inner Universe: An imagined interior world the listener enters.
+  Madness: Loss of sense framed as the goal.
+  IQ Reduction: The listener is made to feel less able to think.
+  IQ Increase: The listener is made to feel sharper and more able to think.
+  Bimbo: Feminine, sexual and deliberately unthinking.
+  Himbo: Masculine, sexual and deliberately unthinking.
+  Identity Play: The listener's sense of who they are is altered.
+  Transformation: The listener becomes something else.
+  Possession: The listener or a character is inhabited and driven by another being.
+  Pain Reduction: Suggestion aimed at dulling or removing pain.
+  Self-Improvement: Aimed at a benefit outside sex.
+  Exercise: Physical training of the body as the activity of the recording.
+
+  # Feminisation and transformation
   Sissy: A feminised submissive, usually addressed with that word.
-  Sissy Slut: Sissy framed sexually available.
-  Feminization: Being made feminine.
-  Body Feminization: Physical feminisation specifically.
+  Sissy Slut: Sissy framed as sexually available.
+  Feminisation: Being made feminine.
+  Body Feminisation: Physical feminisation specifically.
   Feminine: Femininity as the subject.
   Crossdressing: Wearing the other gender's clothes.
-  Dressing: Getting dressed, as the scene.
   Sex Change: Physical sex change as the fantasy.
   Growth: A body part grows.
   Breast Growth: Breasts grow.
   Hormonal: Hormones as the mechanism.
   Attraction to Men: Suggested attraction to men.
-  Heterosexual: Explicitly straight framing.
-  Girl on Girl: Two women together.
-  FFM: Two women and a man.
+  Size Difference: Scale disparity between bodies as the charge — giant and tiny, held in a hand or towered over.
+
+  # Arousal, denial, orgasm
+  Arousal: Arousal itself is the subject.
+  Desire: Wanting as the subject.
+  Needy: Neediness as the state.
+  Desperation: Need past the point of comfort.
+  Slow Build: Deliberate, unhurried escalation.
+  Teasing: Arousal provoked and withheld.
+  Tease and Denial: Arousal built deliberately without release.
+  Edging: Approaching orgasm and stopping.
+  Orgasm Control: The speaker decides whether and when.
+  Orgasm Denial: Release refused.
+  Chastity: Release is locked away.
+  Impotence: Suggested inability to get hard.
+  Premature Ejaculation: Coming sooner than intended, as the subject or the charge.
+  Orgasm: Orgasm as the subject, where no more specific tag fits.
+  Cum Command: Orgasm on command.
+  Hands-Free Orgasm: Orgasm without touch.
+  Forced Orgasms: Orgasm demanded past comfort.
+  Multiple Orgasms: More than one, as the point.
+  Ruined Orgasm: Release interrupted so it disappoints.
+  Muffled Orgasm: The listener must stay quiet through it.
+  Cum Lust: Craving for semen.
+  Cum Eating: Consuming semen.
+  Cumplay: Play with semen.
+  Cum Milking: Semen drawn out repeatedly, being milked dry as the point.
+  Creampie: Ejaculation inside.
+  Facial: Ejaculation on the face.
+  Impreg: Pregnancy as the fantasy.
+  Squirting: Female ejaculation as the act or the appeal.
+  Lactation: Milk production, leaking or being suckled from the breast.
+
+  # Sex acts
+  Sex: Intercourse.
+  Morning Sex: Sex on waking.
+  Sensual: Slow and sensory rather than urgent.
+  Rough: Forceful delivery or act.
+  Blowjob: Oral on a penis.
+  Deep Throat: Taking a penis to the throat.
+  Face Fucking: Thrusting into the mouth.
+  Cunnilingus: Oral on a vulva.
+  Face Sitting: Sitting on the partner's face.
+  Rimming: Oral on the anus.
+  '69': Simultaneous mutual oral sex.
+  Handjob: Manual stimulation of a penis.
+  Fingering: Manual penetration.
+  Footjob: Stimulation with feet.
+  Titjob: Stimulation between breasts.
+  Anal: Anal sex or play.
+  Pegging: The listener is penetrated with a strap-on.
+  Fisting: Penetration with the hand.
+  Double Penetration: Two at once.
+  Sounding: Urethral insertion as the act.
+  Riding: One partner on top.
+  Outercourse: Contact without penetration.
+  Dry Humping: Friction through clothing.
+  Groping: Grabbing and handling.
+  Massage: Massage.
+  Oil: Oil applied to the body.
+  Nipple Play: Attention to nipples.
+  Breast Play: Attention to breasts.
+  Kissing: Kissing.
+  Making Out: Extended kissing.
+  Licking: Licking.
+  Biting: Biting.
+  Spitting: Spit used in the scene.
+  Big Cock: Size as the subject.
+  Virginity: Inexperience or the first time as the subject.
   Threesome: Three people.
   Multiple Partners: More than two.
+  Girl on Girl: Two women together.
   Interracial: Race is part of the scene's charge.
-  Big Cock: Size as the subject.
-  Virgin: Inexperience as the frame.
-  Virginity: First time as the subject.
-  MILF: An older mother figure.
-  Older Woman: An older woman.
-  Mommy Domme: A maternal dominant.
-  DD/lg: Daddy-dominant, little-girl dynamic.
-  MD/lg: Mommy-dominant, little-girl dynamic.
+  Bi: Attraction to more than one gender, including curiosity about it.
+  Heterosexual: Explicitly straight framing.
+  Masturbation: The listener is told or expected to touch.
+  Mutual Masturbation: Speaker and listener touch together.
+  JOI: Instructions for how and when to touch.
+  JOE: Jerk-off encouragement without strict instruction.
+  Oral Instruction: Instruction to the listener on how to perform oral sex.
+  Watching Porn: The listener is directed to watch pornography during the recording.
+  Dirty Talk: Explicit talk as the substance.
+  Seduction: Being seduced.
+  Begging: The listener or a character begs.
+  Erotic: Sexual without explicit act.
+  Explicit: Sex acts described plainly.
+  Extreme: Goes further than most files in the library.
+  Filthy: Coarse language and imagery as the appeal.
+  Dark: Deliberately unpleasant or frightening content.
+  Rape: Non-consent as the fantasy. Fiction, but flagged plainly.
+  Incest: Sex or seduction between family members as the fantasy, named as such.
+  Futanari: A female character with a penis, as the fantasy — not a strap-on, not framed as transition.
+  Selfcest: Sex with a double, clone or other version of oneself.
+  Snuff: Killing as the erotic content, of the listener or a character.
+  Blood Play: Blood used erotically as the medium of the scene.
+  Watersports: Urine as the charge.
+  Condom: A condom is used or discussed in the scene.
+  Bareback: The sex in the scene is explicitly unprotected.
+  No Penetration: Explicitly none.
+
+  # Kink practices
+  Bondage: Restraint.
+  Handcuffs: Cuffs as the restraint.
+  Gag: The mouth is gagged or held open.
+  Blindfold: Sight taken away.
+  Sensory Deprivation: The senses are deliberately restricted — blindfolded, muffled or cut off.
+  Kneeling: The listener kneels.
+  On All Fours: The listener on hands and knees.
+  Trampling: The speaker stands or steps on the listener.
+  Wrestling: Grappling or a physical struggle for dominance.
+  Interrogation: Questioning under pressure as the scene.
+  Impact Play: Striking, as a practice.
+  Spanking: Striking the arse.
+  Pain Play: Pain as the appeal.
+  CBT: Deliberate pain or pressure applied to the cock and balls.
+  Knife Play: A blade as the prop.
+  Needle Play: Needles used on the body.
+  Temperature Play: Heat or cold applied to the body as the sensation.
+  E-Stim: Electrical stimulation used as the sensation of the scene.
+  Violet Wand: An electrical play wand used on the listener or a character.
+  Breath Play: Restricting breath.
+  Choking: Pressure on the throat.
+  Tickling: Tickling.
+  Oral Fixation: The mouth — sucking, mouthing or needing something in it — as the fixation.
+  Body Writing: Writing on the body.
+  Body Piercings: Body piercings as the focus or the charge.
   Pet Play: Animal roles.
   Bunny: A rabbit persona.
   Feral: Animal, untamed behaviour.
-  Princess: The listener or speaker as princess.
+  Heat: Animal rut or heat as the state driving the listener.
+  Hucow: The listener is kept and milked as human livestock.
+  Milking Machine: A machine used to milk the listener.
+  Sex Toys: Toys used in the scene, where no specific toy tag fits.
+  Dildo: A dildo is used in the scene or by the listener.
+  Butt Plug: A plug worn or inserted in the anus, tail plugs included.
+  Wand: A wand vibrator.
+  Consent and Safewords: Limits, consent and safewords are discussed explicitly within the recording.
+  Aftercare: Care and reassurance after a scene.
+
+  # Humiliation and degradation
+  Humiliation: Being brought low, as the appeal.
+  No Humiliation: States it contains no humiliation or degradation.
+  Degradation: Being demeaned, as the appeal.
+  Self Degradation: The listener demeans themselves.
+  Shame: Shame as the feeling worked with.
+  Name Calling: Insults used deliberately.
   Slut: The listener named as such.
-  Brat: A submissive who resists playfully.
-  Tsundere: Cold outside, warm underneath.
-  Yandere: Loving to the point of danger.
-  Tomboy: A boyish girl character.
-  Goth: Goth aesthetic.
+  Small Penis Humiliation: Humiliation about penis size.
+  CFNM: The speaker stays clothed while the listener is naked.
+  Blackmail: Compliance extracted by threat of exposure.
+  Bully: A bullying character who dominates through intimidation.
+  Cuckold: A man watches his partner with another.
+  Cuckquean: A woman watches her partner with another.
+  Voyeurism: Watching.
+  Exhibitionism: Being watched.
+  Public: In a place others might see.
+  Camera: Being filmed.
+
+  # Tenderness and care
+  Comforting: Reassurance is the substance.
+  Acceptance: Being accepted, as the feeling.
+  Body Positivity: Affirming about bodies.
+  Body Appreciation: Admiring the listener's body.
+  Sex Positivity: Affirming about sex and desire themselves.
+  Relaxation: Rest is the purpose.
+  Sleep: Intended to send the listener to sleep.
+  Dreams: Dreams are the subject or the target.
+  Cuddling: Physical closeness without sex.
+  Intimate: Close and private in tone.
+  Affectionate: Warmth and closeness.
+  Loving: Affection is the substance.
+  Wholesome: Kind, with nothing cruel in it.
+  Cosy: Warm and safe in tone.
+  Gentle: Soft throughout.
+  Sweet: Affectionate and light.
+  Playful: Light and teasing.
+  Non-Sexual: No sexual content.
+  Vanilla: No kink.
+
+  # Mood and tone
+  Angry: Anger in the delivery.
+  Bitchy: Deliberately unkind tone.
+  Crying: Crying.
+  Sad: Sadness or melancholy as the tone or the subject.
+  Grief: Loss and mourning as the subject.
+  Bittersweet: Warmth carried together with sadness or loss.
+  Longing: Wanting someone absent.
+  Jealousy: Jealousy or envy of a rival, as the charge.
+  Fear: Fear as the subject or the intent.
+  Horror: Frightening, and meant to be.
+  Humour: Comedy is part of the intent; the recording is meant to be funny.
+  Dark Humour: Jokes made out of grim or unpleasant subject matter.
+
+  # Relationships
+  Romantic: Romance is the point.
+  GFE: Girlfriend experience.
+  Date: A date as the scene.
+  Long Distance: Separated partners.
+  Friends to Lovers: The relationship changes.
+  Enemies to Lovers: Antagonists become lovers.
+  Hunter and Prey: A chase dynamic.
+  Homewrecker: Taking someone's partner.
+  Cheating: Infidelity.
+  Betrayal: Trust broken, as the subject.
+  Confession: Admitting something, as the scene.
+  Polyamory: More than two people in an ongoing relationship, framed as such.
+  Wedding: A wedding or marriage ceremony as the scene.
+  Age Gap: A difference in age is part of the charge.
+  MILF: An older mother figure.
+  Older Woman: An older woman.
+  Mommy Domme: A maternal dominant.
+  Age Play: An adult plays a much younger role — babying, little space, nappies or bottle-feeding.
+  DD/lg: Daddy-dominant, little-girl dynamic.
+  MD/lg: Mommy-dominant, little-girl dynamic.
+  MD/lb: Mommy-dominant, little-boy dynamic.
+
+  # Characters
+  Succubus: A sex demon.
+  Demon: A demon character.
+  Angel: An angel character.
+  Vampire: A vampire character.
+  Werewolf: A werewolf character, or lycanthropic change.
+  Witch: A witch character, working by spell or potion.
+  Ghost: A ghost or spirit character.
+  Genie: A genie or wish-granting figure.
+  Elf: An elf character.
+  Dragon: A dragon character.
+  Alien: An alien character.
+  Monster Girl: A non-human female character.
+  Monster Guy: A non-human male character.
+  Catgirl: A cat-eared, cat-tailed feminine character.
+  Tentacles: Tentacles.
+  Siren: A siren whose voice or song lures the listener.
+  Hero: A heroic or superheroic character.
+  Supervillain: A villain character.
   Nurse: A nurse character.
-  Maid: A maid character.
+  Doctor: A doctor or physician character.
   Teacher: A teacher character.
   Teacher/student: The teacher-student pairing.
   Boss: A workplace superior.
-  Police: Police character.
+  Secretary: A secretary or assistant character.
+  Maid: A maid character.
+  Housewife: A housewife or homemaker character.
+  Police: A police character.
+  Detective: A detective or investigator character.
+  Spy: An espionage character.
+  Thief: A thief or burglar character.
+  Military: A soldier or military character.
   Prisoner: Captivity as the frame.
+  Streamer: A live-streamer or online-persona character.
+  Vtuber: The speaker performs as an animated streaming persona.
   Roommate: A roommate character.
   Co-Workers: Colleagues.
   Friends: Friends, not lovers.
   Strangers: Strangers.
   Cheerleader: A cheerleader character.
-  Succubus: A sex demon.
-  Demon: A demon character.
-  Vampire: A vampire character.
-  Zombie: A zombie character.
-  Alien: An alien character.
-  Monster Girl: A non-human female character.
-  Lamia/Snake: A snake-bodied character.
-  Tentacles: Tentacles.
-  Supervillain: A villain character.
+  Princess: The listener or speaker as princess.
+  Tomboy: A boyish girl character.
+  Goth: Goth aesthetic.
+  Shy Girl: The speaker or a character is timid and hesitant, and that is the appeal.
+  Tsundere: Cold outside, warm underneath.
+  Yandere: Loving to the point of danger.
   Narrator: A narrating voice distinct from a character.
-  Fantasy Scenario: An invented situation, played out.
-  Fantasy: Fantasy as the mode.
-  Fantasizing: The listener is guided to imagine.
-  Narrative: A story with structure.
+
+  # Settings and frames
   Story: A story is told.
+  Real Story: The recording recounts something that actually happened to the speaker.
   Slice of Life: Ordinary life, low stakes.
-  Romantic: Romance is the point.
-  Loving: Affection is the substance.
-  Love: Love as the subject.
-  Affectionate: Warmth and closeness.
-  Cuddling: Physical closeness without sex.
-  Intimate: Close and private in tone.
-  Longing: Wanting someone absent.
-  Long Distance: Separated partners.
-  GFE: Girlfriend experience.
-  Friends To Lovers: The relationship changes.
-  Enemies to Lovers: Antagonists become lovers.
-  Hunter and Prey: A chase dynamic.
-  Homewrecker: Taking someone's partner.
-  Cheating: Infidelity.
-  Cuckold: A man watches his partner with another.
-  Cuckquean: A woman watches her partner with another.
-  Betrayal: Trust broken, as the subject.
-  Confession: Admitting something, as the scene.
-  Voyeurism: Watching.
-  Exhibitionism: Being watched.
-  Public: In a place others might see.
-  Workplace: Set at work.
+  Fantasy: Fantasy as the mode.
+  Science Fiction: Science-fiction setting.
+  Cyberpunk: Neon, implants, corporate dystopia.
+  VR: Virtual reality as the setting or the device of control.
+  Video Game: Game setting or mechanics.
+  Mythology: Myth as the frame.
+  History: Historical setting or subject.
+  Adventure: An adventure plot.
+  Crime: Crime as the frame.
+  Revenge: Getting back at someone as the motive and appeal.
+  Religion: Religious belief, ritual or clergy as the frame.
+  Cult: A cult as the setting or frame.
+  Medical Kink: Clinical settings and procedures.
+  Dungeon: A play dungeon as the setting.
   School: Set at a school.
   College: Set at a college.
-  Medical Kink: Clinical settings and procedures.
-  Science: Science as the frame.
-  Science Fiction: Science-fiction setting.
-  Video Game: Game setting or mechanics.
-  Horror: Fear is the intent.
-  Fear: Fear as the subject.
-  Fearplay: Fear played with deliberately.
-  Crime: Crime as the frame.
-  Politics: Political content.
-  History: Historical setting or subject.
-  Mythology: Myth as the frame.
-  Adventure: An adventure plot.
-  Crying: Crying.
-  Angry: Anger in the delivery.
-  Bitchy: Deliberately unkind tone.
-  Rough: Forceful delivery or act.
-  Gentle: Soft throughout.
-  Sweet: Affectionate and light.
-  Playful: Light and teasing.
-  Wholesome: Kind, with nothing cruel in it.
-  Cosy: Warm and safe in tone.
-  Non-Sexual: No sexual content.
-  Vanilla: No kink.
-  Body Positivity: Affirming about bodies.
-  Body Appreciation: Admiring the listener's body.
-  Acceptance: Being accepted, as the feeling.
-  Body: The body as the focus.
+  Workplace: Set at work.
+  Nature: Woods, weather, animals or open country as the setting.
+  Social Media: Posts, messages or online platforms as the frame.
+  Phone Sex: Framed as a phone or voice call between speaker and listener.
+  Sex Work: Sex work as the frame — the speaker or listener paid for sex or company.
+  Intoxication: Drinking or being drunk as part of the scene.
+  Smoking: Cigarettes and smoke as the fetish.
+  Christmas: Christmas as the occasion of the recording.
+  Halloween: Halloween as the occasion of the recording.
+  Birthday: A birthday is the occasion of the recording.
+
+  # Bodies, clothes and props
   Breasts: Breasts.
-  Cleavage: Cleavage.
+  Ass: The arse.
   Legs: Legs.
   Thighs: Thighs.
-  Ass: The arse.
-  Lips: Lips.
-  Fingernails: Nails.
   Feet: Feet.
-  Sweat: Sweat.
-  Drool: Drooling.
+  Lips: Lips.
+  Long Hair: Hair as the focus of attention or the fetish.
   Scent: Smell as the charge.
-  Perfume: Perfume specifically.
-  Lingerie: Lingerie.
-  Stockings: Stockings.
-  Pantyhose: Tights.
-  Fishnets: Fishnet hosiery.
-  Panties: Underwear.
-  Corset: A corset.
-  Latex: Latex clothing.
-  Heels: High heels.
-  Boots: Boots.
-  Uniform: A uniform.
-  Skirt: A skirt.
-  Yoga Pants: Yoga pants.
-  Sock Fetish: Socks as the fetish.
-  Kinky Clothing: Fetish clothing generally.
-  Lipstick: Lipstick.
+  BBW: A fat or plus-size body as part of the scene's charge.
   Nudity: Nakedness.
   Strip Tease: Undressing as performance.
-  Stripping: Undressing.
-  Fur: Fur.
-  Cross: A crucifix as a prop.
-  Camera: Being filmed.
-  Video: Video is part of the scene.
-  Hitachi: A wand vibrator.
-  Food: Food.
-  Water: Water.
-  Rain: Rain.
-  Space: Outer space as the setting.
-  Dancing: Dancing.
-  Karaoke: Singing along.
-  Poetry Reading: Poetry read aloud.
-  Erotic Poetry: Erotic verse.
-  A cappella: Unaccompanied singing.
-  Accent: An accent is part of the appeal.
-  Fast Speech: Deliberately rapid delivery.
+  Lingerie: Lingerie.
+  Panties: Underwear.
+  Stockings: Stockings or tights.
+  Corset: A corset.
+  Heels: High heels.
+  Boots: Boots.
+  Latex: Latex clothing.
+  Leather: Leather clothing or gear.
+  Uniform: A uniform.
+  Gloves: Gloves as part of the look or the charge.
+  Glasses: Glasses as part of the look or the charge.
+  Lipstick: Lipstick.
+  Kinky Clothing: Fetish clothing generally.
+
+  # Voice and performance
   Voice Kink: The voice itself is the fetish.
-  Sleepy Morning Voice: A just-woken voice.
-  Lady Sounds: Feminine sounds, unspecified.
   Moaning: Moaning.
-  Layered Moaning: Moans layered over each other.
   Whimpering: Whimpering.
   Giggling: Giggling.
-  Giggles: Giggling.
   Laughing: Laughter.
   Gagging: Gagging sounds.
-  Ear Brushing: Sound moving across the ears.
-  Sheet Sounds: Bedding sounds.
-  Crinkling: Crinkling sounds.
-  Foot Swaying: Rhythmic foot movement as the focus.
-  Physical Interaction: The listener is asked to move or act.
-  Body Writing: Writing on the body.
-  Findom: Money as the submission.
-  Only Me: Attention restricted to this creator.
-  Possessive: The speaker claims the listener.
+  Dancing: Dancing.
+
+  # Form and meta
   Rambling: Unscripted, loose talk.
-  Improv: Unscripted performance.
   Meta: About the creator or the making, not a scene.
-  Good Boy: Praise word for a male listener.
-  Good Girl: Praise word for a female listener.
-  Dirty Talk: Explicit talk as the substance.
-  Seduction: Being seduced.
-  Reverse Psychology: Telling the listener not to, to make them.
-  Virus: Spread framed as infection.
-  Honey: Endearment used throughout.
-  Begging: The listener or a character begs.
-  Rape: Non-consent as the fantasy. Fiction, but flagged plainly.
-  Phantom Touch: Touch suggested so it is felt without contact.
-  Orgasm: Orgasm as the subject, where no more specific tag fits.
-  Cum with Me: Coming together with the speaker.
-  Cum in My Mouth: Ejaculation into the mouth.
-  Cum Inside Me: Ejaculation inside.
-  Morning Sex: Sex on waking.
-  Sensual: Slow and sensory rather than urgent.
-  BDSM: Bondage, discipline, dominance and submission as a practice.
-  L-Bombs: Declarations of love, used deliberately.
-  Age: Age difference or age itself is part of the charge.
-  Encouraging: Warm urging, short of instruction.
-  Cult: A cult as the setting or frame.
-  Incest: Sex or seduction between family members as the fantasy — parent, sibling or other blood relation, named as such.
-  Futanari: A female character with a penis, as the fantasy — not a strap-on and not framed as transition.
-  Lactation: Milk production, leaking or being suckled from the breast.
-  Watersports: Urine as the charge — pissing, being pissed on, drinking, or losing bladder control.
-  Smoking: Cigarettes and smoke as the fetish — inhaling, exhaling and lighting up used erotically or as a cue.
-  Size Difference: Scale disparity between bodies as the charge — giant and tiny, held in a hand or towered over.
-  Spanish: Spanish language or setting.
-  69: Simultaneous mutual oral sex.
-  Alpha Male: The listener is framed as, or trained into, a dominant masculine ideal.
-  Angel: An angel character.
-  Baby: The listener is put in the role of an infant — babying, babytalk, nappies or bottle-feeding.
-  Bi: Explicitly bisexual framing.
-  Bicuriousity and Bisexuality: Attraction to more than one gender, including curiosity about it, as the subject.
-  Bilingual: Two languages are used within the recording.
-  Bittersweet: Warmth carried together with sadness or loss.
-  Blackmail: Compliance extracted by threat of exposure.
-  Bully: A bullying character who dominates through intimidation.
-  Candles: Candles as the prop or the light of the scene.
-  Casino: Betting, cards or a casino as the frame of the scene.
-  Catgirl: A cat-eared, cat-tailed feminine character.
-  Christmas: Christmas as the occasion of the recording.
-  Circus: A circus or carnival setting.
-  Cleaning: Cleaning or housework as the service performed.
-  Cloning: Copies or duplicates of a person as the fantasy.
-  Cyberpunk: Cyberpunk setting — neon, implants, corporate dystopia.
-  Dark Humor: Jokes made out of grim or unpleasant subject matter.
-  Date: A date as the scene.
-  Detective: A detective or investigator character.
-  Dildo: A dildo is used in the scene or by the listener.
-  Domme Training: The listener is trained to dominate rather than submit.
-  Dragon: A dragon character.
-  Driving: Set in a moving car, or driving as the activity.
-  Drugging: A drug or potion is the mechanism of compliance or arousal.
-  Dungeon: A play dungeon as the setting.
-  Elf: An elf character.
-  Entomology: Insects as the creature or the charge.
-  False Cum Countdown: A countdown to orgasm that is broken off or withheld before it completes.
-  Farm: A farm or barn as the setting.
-  Free Use: The listener's body is available to be used at any time without asking.
-  Friend Zone: The speaker keeps the listener as a friend while denying them anything more.
-  Genie: A genie or wish-granting figure.
-  Ghost: A ghost or spirit character.
-  Glasses: Glasses as part of the look or the charge.
-  Gloves: Gloves as part of the look or the charge.
-  Gore: Graphic injury, mutilation or viscera described in detail.
-  Head on Lap: The listener's head rests in the speaker's lap as the position of the scene.
-  Heat: Animal rut or heat as the state driving the listener.
-  Himbo: Masculine, sexual and deliberately unthinking.
-  Hucow: The listener is kept and milked as human livestock.
-  Hypnotherapist: A hypnotherapist character in a clinical or consulting frame.
-  IQ Increase: The listener is made to feel sharper and more able to think.
-  Jealousy: Jealousy or envy of a rival, as the charge.
-  Legjob: Stimulation with the legs or thighs.
-  Long Hair: Hair as the focus of attention or the fetish.
-  Loud Orgasm: Orgasm performed loudly, volume as the appeal.
-  Make Noise: The listener is required to be audible — moaning, speaking or crying out on command.
-  Metamours: Openly multiple relationships, including partners' partners, as the frame.
-  Metronome: A metronome's beat used as the focus or pacing device.
-  Military: A soldier or military setting or character.
-  Milking Machine: A machine used to milk the listener, of milk or semen.
-  Mind Reading: The speaker knows the listener's thoughts.
-  Nature: The natural world — woods, weather, animals, open country — as the setting or the subject.
-  Nerdy Girl: A bookish, geeky girl character.
-  Nightclub: Set in a club or bar.
-  No Words: Contains no speech; the recording is voice sound or ambience alone.
-  Oil: Oil applied to the body.
-  Oral Fixation: The mouth — sucking, mouthing or needing something in it — is the focus of the fixation.
-  Parasite: A parasitic creature that infests or takes over the listener.
-  Phone Sex: The scene is framed as a phone or voice call between speaker and listener.
-  Pirate: A pirate character or setting.
-  Plant: Plants or vines as the agent or setting of the scene.
-  Playing with Your Hair: Stroking, brushing or playing with hair.
-  Possession: The listener or a character is inhabited and driven by another being.
-  Prejac: Coming sooner than wanted, as the suggestion or the humiliation.
-  Premature Ejaculation: Coming sooner than intended, as the subject or the charge.
-  Pussy Eating Instructions: Instruction to the listener on how to perform oral on a vulva.
-  Pussy Free: The listener is permanently denied access to vaginas; sex with women is framed as no longer for them.
-  Pussy Worship: Reverent attention to a vulva.
-  Radio Show: The recording is staged as a radio broadcast, with the listener as audience.
-  Real Story: The recording recounts something that actually happened to the speaker, not an invented scene.
-  Religion: Religious belief, ritual or clergy as the frame.
-  Revenge Fantasy: Getting back at someone is the scene's motive and appeal.
-  Rimming: Oral on the anus.
-  Robot Voice: The voice is processed to sound mechanical or synthetic.
-  Sad: Sadness or melancholy as the tone or the subject.
-  Satire: Humour, parody or satire is the intent.
-  Secretary: A secretary or assistant character.
-  Selfcest: Sex with a double, clone or other version of oneself, as the fantasy.
-  Sell Your Soul: The listener bargains away their soul as the act of surrender.
-  Sensory Deprivation: The listener's senses are deliberately restricted — blindfolded, muffled or cut off from sensation.
-  Serial Killer: A murderer character, with the killing as part of the scene's charge.
-  Sex Toys: Toys used in the scene — dildos, plugs, vibrators — where no specific toy tag fits.
-  Shy Girl: The speaker or a character is timid and hesitant, and that is the appeal.
-  Siren: A siren whose voice or song lures the listener.
-  Sleeper Agent: The listener is conditioned to lie dormant until a cue activates them.
-  Slime: A slime or ooze creature, or being engulfed by one.
-  Snuff: Killing as the erotic content, of the listener or a character.
-  Spider: A spider character or spiders as the creature in the scene.
-  Spy: An espionage character or setting.
-  Stage Hypnosis: Hypnosis performed as a show, before an audience.
-  Statue: The listener is turned to stone or posed as a statue.
-  Stepping On You: The speaker stands or steps on the listener.
-  Streamer: A live-streamer or online-persona character.
-  Suggestion Removal: The file's purpose is to remove suggestions or triggers installed earlier.
-  Thief: A thief or burglar character.
-  Three Orgasms: Three orgasms, structured.
-  Toy: A toy is used on or by the listener.
-  Toys: Sex toys used on the listener or the speaker, other than a named wand.
-  Trigger Beg: Produces begging from the listener on the word.
-  Underwater: Submersion or an underwater setting.
-  VR: Virtual reality as the setting or the device of control.
-  Voicemail: Framed as a recorded message left for the listener rather than live speech.
-  Vtuber: The speaker performs as an animated streaming persona.
-  Watching Porn: The listener is directed to watch pornography during the recording.
-  Wedding: A wedding or marriage ceremony as the scene.
-  Werewolf: A werewolf character or lycanthropic change.
-  Witch: A witch character working by spell or potion.
-  birthday: A birthday is the occasion of the recording.
-  clit stimulation: Attention to the clitoris.
-  glass toy: A sex toy is used in the scene.
-  grieving: Loss and mourning as the subject.
-  humor: Comedy is part of the intent; the recording is meant to be funny.
-  hysterical literature: The speaker reads aloud while being stimulated, holding composure as long as they can.
-  in the woods: Set outside, in nature rather than a room.
-  nervous: The speaker is audibly nervous, shy or flustered.
-  pitch changed voice fx: The recorded voice is digitally shifted in pitch.
-  polyamory: More than two people in an ongoing relationship, framed as such rather than a single encounter.
-  quickie: A short recording, in and out in a few minutes.
-  ramblefap: The speaker talks loosely and unscripted while masturbating.
-  request fill: The recording was made in answer to a listener's request.
-  revenge: Getting back at someone as the frame of the scene.
-  sex positivity: Affirming about sex and desire themselves.
-  short and sweet: A brief recording, trance or scene delivered in a few minutes.
-  shy: The speaker or a character is shy and hesitant.
-  MD/lb: Mommy-dominant, little-boy dynamic.
-  threats: The speaker threatens the listener or a character.
-  whiskey: Drinking or intoxication as part of the scene.
-  whistling: The speaker whistles.
-  woman in a suit: A suit or tailored menswear as the focus.
-  Service: The listener performs duties or tasks for the dominant, service itself being the submission.
-  Dom to Sub: The dominant party yields over the file, ending as the submissive one.
-  Absorb Fetish: The listener is given another's fetish or desire as their own.
-  BBW: A fat or plus-size body as part of the scene's charge.
-  Blood Play: Blood used erotically as the medium of the scene.
-  Body Piercings: Body piercings as the focus or the charge.
-  Breathe: Paced or directed breathing used as the focus or technique of the file.
-  Butt Plug | Tail Insertion: A plug worn or inserted in the anus, including tail plugs.
-  CBT-Chair: Deliberate pain or pressure applied to the cock and balls.
-  CMNS | CMNF: The speaker stays clothed while the listener is naked, in the male-clothed/female-nude frame.
-  Cliffhanger Ending: The recording breaks off unresolved, continuing elsewhere or not at all.
-  Condom: A condom is used or discussed in the scene.
-  Consent Talk | Safewords: Limits, consent and safewords are discussed explicitly within the recording.
-  Cool Girl: An aloof, effortlessly confident girl character.
-  Cum Milking: Semen drawn out of the listener repeatedly, being milked dry as the point.
-  Diet Talk: Dieting, weight or food restriction, as something the recording touches on.
-  Dinosaurs: A dinosaur or saurian creature as the character in the scene.
-  Doctor: A doctor or physician character.
-  E-Stim: Electrical stimulation used on the listener as the sensation of the scene.
-  E-Stim Talk: Electrical stimulation applied to the body as the play.
-  Fall Unconscious: The listener or a character is put out cold, as the content.
-  Fist Fucking: Penetration with the hand.
-  Flying: Flight or weightless rising as the imagery of the scene.
-  Full Body Insertion: The listener's whole body is taken inside another body.
-  Gag: The mouth is gagged, as restraint or silencing.
-  Halloween: Halloween as the occasion of the recording.
-  Hand-gag: The mouth is gagged or covered — hand, cloth, panties or a toy.
-  Haphephobia: Fear or intolerance of being touched, as something the recording touches on.
-  Hero: A heroic or superheroic character.
-  Hidden Observer: The part of the listener's mind that stays watching outside trance is addressed directly.
-  High Protocol: Formal D/s protocol — strict rules of address, posture and permission enforced throughout.
-  House-Wife: A housewife or homemaker character.
-  Ice Play: Ice or cold applied to the body as sensation play.
-  Interrogation: Questioning under pressure as the scene.
-  Leather: Leather clothing or gear as the material fetish.
-  Lifeguard: A lifeguard character.
-  Live Audio: Recorded live in one unedited take, or captured from a live session.
-  Longer Orgasms: Orgasm suggested to stretch out far beyond its normal length.
-  Mdom: A man holds the power in the scene.
-  Mind Pussy: An imagined genital or erogenous zone located in the mind, made the site of sensation.
-  Monologue: One unbroken solo address, with no scene, dialogue or interaction.
-  Monster Guy: A non-human male character.
-  Needle: Needles used on the body as the prop or the practice.
-  No Condom: States the sex in the scene is unprotected, barelessness named as such.
-  No Humiliation: States it contains no humiliation or degradation.
-  No Rape: States it contains no non-consent framing.
-  Ovipositors: Eggs deposited in the listener or a character, usually by a creature.
-  Pain Reduction: Suggestion aimed at dulling or removing pain.
-  Recursive: Suggestion that refers back to itself, each pass reapplying and strengthening the last.
-  Ring-gag: The mouth is held open or silenced with a gag.
-  Sadistic Mentions: Sadistic cruelty or enjoyment of suffering is mentioned, as something the recording touches on.
-  Sex Work: Sex work as the frame of the scene — the speaker or listener paid for sex or company.
-  Social Media: Posts, messages or online platforms as the frame of the scene.
-  Sounding: Urethral insertion as the act.
-  Spirals: A spiral image used as the hypnotic focus.
-  Spitting: Spit used in the scene — spat into the mouth or onto the body.
-  Squirting: Female ejaculation as the act or the appeal.
-  Steampunk: Steampunk setting — clockwork, steam and Victorian machinery.
-  Temperature Play: Heat or cold applied to the body as the sensation.
-  Trust Me: Trust in the speaker is the subject the recording works with.
-  Violet Wand: An electrical play wand used on the listener or a character.
-  Workout Encouragement: Physical exercise or training the body as the activity of the recording.
-  Wrestling: Grappling or a physical struggle for dominance as the scene.
-  Branding: The listener is marked as owned — branded, burned or stamped with the owner's mark.
-  Contract: A signed or spoken agreement binding the listener, the act of consenting on paper being the surrender.
-  Guided Meditation: Framed as meditation rather than hypnosis — guided attention and rest with no induction or suggestion agenda.
-  Furniture Play: The listener is used as furniture — footstool, table, seat — held in place to be sat on or rested upon.
+  Cliffhanger Ending: The recording breaks off unresolved.

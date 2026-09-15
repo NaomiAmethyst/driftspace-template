@@ -268,6 +268,15 @@ filter once proposed 140 previews as new releases.
 tag. Twenty-eight unrelated creators did not each decide their hypnosis was
 "Blues"; that byte put 770 junk tags into one library.
 
+**An unquoted numeric tag name makes its whole registry block invisible.**
+`69:` and `360:` parse as integer keys, so `content:` and `production:` decode as
+a non-string map, Inductor's type assertion fails, and it reads those blocks as
+*empty* — every tag in them silently stops resolving, and `adjudicate --apply
+--write` then rewrites the block containing only the tag it just added. Nothing
+errors. Quote them: `'69'`. After editing `content/tags.yaml`, check it by
+ingesting a source record tagged with something you know is registered and
+confirming it lands in `tags:` rather than `provenance.proposed_tags`.
+
 **Whisper mishears creator names.** That leaks into generated titles, summaries
 and spoilers. Normalise them.
 
