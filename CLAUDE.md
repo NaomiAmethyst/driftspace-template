@@ -245,7 +245,7 @@ is silent and permanent.
 
 ## Things that have already cost time
 
-**Filenames lie, in both directions.** Deliberate noise (`Bloo345435dy_Calia`), a
+**Filenames lie, in both directions.** Deliberate noise (`Bl00d3y_r3l34s3_FINAL2`), a
 `-Custom` suffix that does not mean a custom, `Mixdown` copies beside titled
 ones. In one library 112 recordings were claimed by two items each;
 `inductor duplicates` sorts them, folds the ones that differ only by a numeric
