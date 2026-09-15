@@ -37,6 +37,12 @@ mapping:
       creators and not one of their transcripts is about the blues.
 ```
 
+**These files carry comments, and the tools do not.** An `inductor registry`
+operation that repoints a map — a rename or a merge whose target the map names —
+rewrites the file from its parsed contents, which does not preserve comments.
+If a map's header is worth keeping, keep a copy, or put the note somewhere the
+tools do not write.
+
 **Read the map before applying it.** A model that maps a creator's whole
 vocabulary onto three registry entries has lost the distinctions that made the
 vocabulary worth having, and a model that proposes forty new entries has lost

@@ -21,6 +21,80 @@ Both tools are public repositories of their own. **Nothing you write here should
 end up needing a change in either of them**, and nothing you write in a parser
 here should assume anything about another source.
 
+## This directory belongs to whoever cloned it
+
+It is a starting point, not a specification. Most of what ships here exists so
+that the first hour is spent importing recordings rather than deciding where
+things go — and it is meant to be changed once the shape of a particular library
+is clear. Two kinds of thing are mixed together in these notes, and it is worth
+knowing which is which.
+
+**Yours to change, and expected to change:**
+
+- **`content/tags.yaml`** above all. It ships as a starting vocabulary, not a
+  finished one: the tags a library actually needs are the ones its recordings
+  turn out to be about. Expect to add, rename, merge and re-file entries as they
+  accumulate, and use `inductor registry` for it so the items, the creator maps
+  and the ruling ledger move with the registry rather than drifting from it. A
+  vocabulary nobody edits does not stay tidy — it accretes. One library reached
+  843 entries carrying lower-case leftovers, symbol prefixes, three spellings of
+  "toys" and a dozen tags filed in the wrong namespace, every one of them
+  arriving one reasonable-looking decision at a time.
+- **These notes, and each directory's `README.md`.** Write down what this
+  library learns. A note that has drifted from what the library actually does is
+  worse than no note, because it is believed.
+- **`tools/mirrors/example_wordpress.py`** — a worked example to copy or delete.
+
+**Load-bearing, and not arbitrary:**
+
+- The three pieces staying separate, and `content/` being the thing that
+  matters. Everything else can be rebuilt from it; it cannot be rebuilt from
+  anything else.
+- `content/` permanent, `state/` expensive, `cache/` disposable.
+- A tag reaching an item only through the registry.
+- Changing the library through commands rather than by hand-editing YAML.
+
+The reasons for those four are written down further on, each with what it cost
+to learn. Change them if the reasons stop applying — but read the reason first.
+
+**The namespaces are yours too, and they live in `content/tags.yaml`.**
+`Voice:`, `Audience:`, `Induction:`, `Production:`, `Trigger:`, `Compulsion:`,
+`CW:` and the unprefixed content namespace are what a registry gets when it says
+nothing — they are a claim about what is worth separating in *these* recordings,
+and a library of guided meditations or audio drama may want different ones.
+Declare them and both tools follow:
+
+```yaml
+apiVersion: hypnotica/v1
+kind: Tags
+namespaces:
+  - key: setting
+    prefix: Setting
+    label: Settings
+    note: where it takes place
+    colour: '#445566'
+    dark: '#99aabb'
+  - key: warning
+    prefix: Warning
+    label: Warnings
+    spoiler: true
+  - key: subject          # no prefix: where bare tags go
+    label: Subject
+setting:
+  Forest: Among trees.
+```
+
+The order is the order sections appear. `spoiler` puts a section behind the
+spoiler control, as triggers and compulsions are. `colour` becomes that
+namespace's chip colour, and a namespace without one reads as ordinary text
+rather than as broken. Inductor files tags by the same list, so
+`inductor registry add "Setting: Cave"` lands in the right block and
+`"Voice: fem"` is refused when no `Voice` namespace is declared.
+
+Adding a block *without* declaring it is the quiet failure: an unrecognised
+prefix is filed under the unprefixed namespace and renders as an ordinary tag,
+so the tags resolve, nothing errors, and the section simply never appears.
+
 ## Before you start
 
 Check that the tools are there and the library validates:
@@ -317,6 +391,14 @@ command containing the pattern kills its own shell. Bracket it: `[p]attern`.
 
 ## What not to do
 
+- **Snapshot `content/` before any command that writes across the library** —
+  a bulk retag, a duplicate fold, a registry change, an `adjudicate --apply`.
+  `tar czf` of a few thousand YAML files takes seconds, and it is the difference
+  between a ten-minute correction and a loss. It is also what makes a change
+  checkable: diffing the result against the snapshot is the only way to find out
+  what a command *actually* did, as against what it reported. Three separate
+  mistakes in one session of this library were recoverable for that reason and
+  no other.
 - **Do not edit files under `content/` by hand to fix a systematic problem.**
   There is an Inductor command for it — `retag`, `fold`, `retitle`, `paths`,
   `attribute`, `authors` — and hand edits across hundreds of files do not leave
