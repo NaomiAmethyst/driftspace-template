@@ -220,9 +220,20 @@ inductor orphans                             # creator pages and transcripts not
 hypnotica -s content build -o www --media link
 ```
 
-`run` drives the stages in order and `ingest --stage` runs any subset of them —
-`media`, `transcribe`, `analyse`, `review`, `emit`. `--needs spoilers` narrows a
-run to the items still missing something. Three flags worth knowing:
+`run` is a dependency-graph dispatcher, not a loop over stages: it works out
+what each recording is still missing and schedules it across lanes — `disk`,
+`cpu`, `gpu`, `api`, `batch`, `art` — so transcription on the GPU overlaps with
+measurement, analysis and the batched review rather than waiting its turn. It
+also builds three artefacts that `ingest --stage` has no name for at all:
+`measurements`, `voiceprint` and `cover`.
+
+So `run` is the one to reach for, including when you are being careful. Going
+stage by stage to keep a close eye on an import buys nothing: it is slower, and
+it leaves the items short of artefacts you would then have to notice were
+missing. `ingest --stage` is for wanting *less* than the graph on purpose —
+`media`, `transcribe`, `analyse`, `review`, `emit`, any subset, as when you are
+keeping transcripts away from a model provider. `--needs spoilers` narrows
+either to the items still missing something. Three flags worth knowing:
 
 - **`--overwrite` is what lets a run replace a summary or spoilers that already
   exist.** Without it nothing already written is touched, which is what makes a
