@@ -215,6 +215,23 @@ is silent and permanent.
   creator's vocabulary, `inductor adjudicate` for what a run proposes. This
   applies to a creator's own tags too. Letting unruled tags sit on items is how
   874 unregistered spellings accumulated across 558 of them in one library.
+- **The registry wins, always.** A creator's map exists to say what their
+  vocabulary becomes *in the registry*, so a row's `to:` may only name a tag the
+  registry already has. A row pointing anywhere else is not an answer and never
+  outranks the registry: the tag resolves as written, `inductor check` reports
+  the row under `map_targets_missing`, and the row is to be adjudicated into the
+  registry or dropped from the map. A target a `tagmap` run wants but the
+  registry lacks is therefore not written as a mapping at all — it goes to
+  `pending:` in the same file, which `inductor adjudicate` reads, and only a
+  ruling can promote it.
+
+  This is the trap that looks most like success. A row reads as settled, so
+  nothing flags it, and the tag it was meant to place quietly stops resolving.
+  In one library 100 such rows across five creators pointed at plausible names —
+  `Humour`, `Exercise`, `Strong Woman` — that nobody ever added, and because a
+  map used to outrank the registry, a single `retag` stripped 1,029 registered
+  tags off 675 recordings. Every one was a tag the registry already had, under
+  the spelling the item was using.
 - **`Audience: sissy` is not `Audience: transfem`.** One is a kink about being
   made into a woman; the other is a woman. A registry that said transfem covered
   "feminisation framed as such" filed 343 recordings that call the listener a
@@ -305,7 +322,12 @@ command containing the pattern kills its own shell. Bracket it: `[p]attern`.
   `attribute`, `authors` — and hand edits across hundreds of files do not leave
   a record of what was decided.
 - **Do not add a tag to an item that is not in `content/tags.yaml`.** Propose it
-  and let `adjudicate` rule.
+  and let `adjudicate` rule. Where a person has decided directly, the command is
+  `inductor registry add|describe|remove|rename|merge`, or `registry bulk` for a
+  file of changes — never an edit to `content/tags.yaml` on its own, which moves
+  one of the five places a tag is written down and leaves the other four
+  disagreeing silently. See
+  [`state/decisions/README.md`](state/decisions/README.md).
 - **Do not delete anything under `state/`.** Transcripts are GPU-hours and
   rulings are judgements nobody can reconstruct. `cache/` is the disposable one.
 - **Do not put the user's material, paths, or creators' names into anything
