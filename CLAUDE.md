@@ -208,6 +208,34 @@ exactly like success. The checks that have actually caught this:
 
 Two minutes grepping a mirror for a few known titles saves an hour.
 
+**An index is not a mirror, and the join is the risky part.** A source that
+holds the recordings gives you catalogue and audio together, and matching is a
+filesystem walk. A third-party index — a database site, a wiki, a spreadsheet —
+holds only the write-ups, so importing from one is a *join* against files you
+already have, and the join is a guess that has to be made well. Match on
+duration and require the titles to agree, not the other way round: a
+near-identical title is exactly what a voice-only cut, a looping edit or an
+intro-less version has, and those are different recordings with different
+running times. Veto any pair whose durations disagree, make the best candidate
+beat the runner-up by a margin, assign one-to-one, and report the rest unmatched.
+
+**Check whether a duration was measured or advertised before trusting it.** An
+index quotes both and does not say which. If a creator's running times are whole
+minutes almost every time, that is a shop's stated length, not a measurement,
+and it can be out by tens of minutes; a creator whose times are whole minutes a
+tenth of the time is being measured. Vetoing on advertised figures throws out
+correct matches wholesale. But do not then drop the veto — loosen it and keep a
+sanity band, because the pairing that a slack veto lets through is a preview
+inheriting a full release's write-up. **Direction matters more than size:** a
+file *longer* than advertised is usually an intro, outro or bonus, while a file
+*shorter* is the preview-or-partial signature and deserves the stricter test.
+
+**A duplicate claim can hide behind an assignment.** When two importers reach
+the same file and the matcher assigns one-to-one, displacing pressure pushes the
+loser onto its second-best candidate rather than leaving it unmatched. So the
+records where two importers collided are exactly the ones to re-check: if every
+one of them disagrees about duration, that is the mechanism, not coincidence.
+
 ### 4. Ingest
 
 ```sh
@@ -215,6 +243,7 @@ inductor tagmap --author some-creator        # map their vocabulary onto the reg
 inductor run --author some-creator           # media, transcribe, analyse, review, emit
 inductor adjudicate                          # rule on any tag the run wants to add
 inductor adjudicate --apply --write          # after reading the rulings
+inductor retitle --apply rulings.yaml        # a reviewed TitleRulings file
 inductor duplicates                          # anything imported twice
 inductor orphans                             # creator pages and transcripts nothing refers to
 hypnotica -s content build -o www --media link
@@ -226,6 +255,23 @@ what each recording is still missing and schedules it across lanes — `disk`,
 measurement, analysis and the batched review rather than waiting its turn. It
 also builds three artefacts that `ingest --stage` has no name for at all:
 `measurements`, `voiceprint` and `cover`.
+
+The library-wide passes that follow — the tag maps, the rulings, the audits, the
+reports — are nodes in the same graph rather than steps after it, so they
+overlap each other instead of running one cheap pass at a time. Two kinds of
+edge earn their keep. `needs` means *must have succeeded*; `after` means *must
+have finished*. Almost every maintenance pass wants the second: gate them all on
+`needs` and a single failed recording out of thousands blocks the lot, when what
+they actually require is only that nothing is still writing. Lanes are widths,
+not categories — the lane that rewrites item documents is one job wide, and the
+test for whether a pass belongs on it is not how long it runs but whether it
+saves a document some other pass also saves.
+
+A run **removes** the orphans it finds rather than only listing them —
+`--no-orphans-write` asks for the report alone, and a dry run never removes.
+What that sweep may delete is worth knowing before the first time: an item only
+goes when the toolchain claimed it *and* its source record is gone, but creator
+pages no item names and transcripts pointing at no item go whoever wrote them.
 
 So `run` is the one to reach for, including when you are being careful. Going
 stage by stage to keep a close eye on an import buys nothing: it is slower, and
@@ -240,8 +286,14 @@ either to the items still missing something. Three flags worth knowing:
   re-run safe to point at the whole library. The default is not timidity: a
   version of the item writer that rebuilt each item from its source record lost
   the summary and spoilers of 381 live items in one run.
-- **`--recover <batch-id>`** adopts a review batch that was already submitted. A
-  killed process does not cancel one, and there is no cancel endpoint.
+- **A submitted review batch is picked up again by itself.** A killed process
+  does not cancel one and there is no cancel endpoint, so the reviews are paid
+  for either way. Every submission is journalled under the cache, and a later
+  `run` takes up anything still marked `submitted` that covers work in hand,
+  dropping those recordings from what it submits. It *collects* rather than
+  waits, so a batch still running is left for next time and one stale entry
+  cannot stall a run. `--wait-unfinished` sits on one anyway; `--recover
+  <batch-id>` names one explicitly.
 - **`--no-covers`** skips artwork, which needs a running ComfyUI. Covers are off
   in the shipped config; turn them on when you have one.
 
@@ -294,6 +346,12 @@ is silent and permanent.
 - **`needs:`** lists what an item is still missing. The pipeline selects on it.
 - **`provenance:`** records where metadata came from, and what this toolchain
   generated versus what arrived with the item. Never drop it.
+- **`provenance.managed_by`** is Inductor claiming an entry it produced from a
+  source record, and it is what makes deletion safe. Ownership is claimed, never
+  inferred: an entry without the stamp belongs to whoever wrote it, so when its
+  source record disappears Inductor reports it and stops. An entry *with* the
+  stamp goes when its source goes, which is what lets deleting a source entry
+  delete what it made. Absence of a claim is a hard stop, not a default.
 - **Tags** come from `content/tags.yaml` — the registry, and *only* from there.
   A tag that is not in it never reaches an item: it is recorded in
   `provenance.proposed_tags` and put to the pipeline — `inductor tagmap` for a
@@ -347,6 +405,76 @@ is silent and permanent.
 
 ## Things that have already cost time
 
+**A verdict is not a value, and a model will put one in the value's field.**
+Asked to review a whole library one item at a time — is this title right, does
+it belong to a series, is it a variant — a model answers the question rather
+than filling the field: the literal string `it's fine` arrives where the title
+goes, thousands of times. Applying that field as written renames thousands of
+records to "it's fine". Two quieter shapes mean the same thing: an answer that
+restates the existing value verbatim, and an empty one. Normalise a review
+before applying any of it, so the value field is non-null *only* where something
+actually changes and the verdict lives in its own field. Check the other fields
+for the same hazard while you are there, and check no real value resembles the
+sentinel before separating them by string.
+
+**A model answers each question independently, so its answers can contradict.**
+In the same review, four hundred titles were flagged as garbage — hex ids,
+truncated names, collapsed separators, all correctly — and all but one of those
+rows *also* said the title was fine. Neither answer is unreliable in general;
+what is unreliable is assuming one verdict constrains another. Cross-tabulate
+the fields before trusting any of them, and when two disagree, work out which
+question the evidence actually answers.
+
+**Do not let a check warn about what the design does.** A variant group shares
+one title across its members — that is what makes it a group — so a check that
+reports every repeated title fires on hundreds of correct records, tells
+somebody to go and fix the thing the library is deliberately doing, and buries
+the handful of repeats that really are duplicate imports. Key such a check on
+the whole identity, not the part that is meant to repeat.
+
+
+**One file under two mount spellings defeats every string-keyed match.** A
+bind mount, a volume alias, a symlinked share: the same bytes, the same inode,
+two paths. Anything that matches records by comparing path strings will treat
+them as unrelated, and the symptom is not an error but two complementary lists
+that never overlap -- records that look orphaned on one side, files that look
+unimported on the other. Test it with `stat -c %d:%i` on both spellings before
+believing either list. Key on device and inode where you can; where you cannot,
+normalise to the alias, which outlives the volume being re-provisioned.
+Normalising may also make real collisions visible for the first time -- a
+mismatch that hides a duplicate is worse than the duplicate.
+
+
+**A refusal is a fact about the model, not about the material.** A model that
+will not describe what you gave it answers with prose, with an empty body and an
+error finish reason, or with an outright error — and all three arrive downstream
+as a result that will not parse, indistinguishable from a mangled one. Do not
+treat that as a bad recording. Name one or more fallback models, offer the
+leftovers to them directly rather than at batch latency, and record which model
+actually answered, because that provenance is part of the entry. When every
+model declines the same item, stop: an agreed refusal is a thing to read, not an
+obstacle to route around.
+
+**A pass that rewrites whole documents belongs on the single-file lane.** A pass
+that reads a document set when it starts, edits in memory, and saves each whole
+document back will silently lose whatever another pass wrote in between — no
+error on either side, and the symptom is an intermittently missing field rather
+than a failure. The test for whether a pass needs serialising is not how long it
+runs but whether it saves a document some other pass also saves.
+
+
+**A "is it already done?" predicate must answer the *producer's* question.**
+If the scheduler decides an artefact is missing by probing one path and the
+worker decides by consulting a field on the record, the two will disagree, and
+the disagreement is silent: work gets queued, the worker declines it, nothing
+errors, nothing changes. The symptom is not a failure — it is a count that never
+goes down and a run that is always slower than it should be. Whenever a
+scheduler and a worker both decide whether work is needed, make them ask the
+same question, and prefer the record's own declaration over a guessed filename:
+an artefact that arrived with the source may not use the extension or the
+spelling the generator would have chosen.
+
+
 **Filenames lie, in both directions.** Deliberate noise (`Bl00d3y_r3l34s3_FINAL2`), a
 `-Custom` suffix that does not mean a custom, `Mixdown` copies beside titled
 ones. In one library 112 recordings were claimed by two items each;
@@ -385,6 +513,21 @@ and spoilers. Normalise them.
 **Treat the source archive as read-only** whether or not it is mounted that way.
 Anything generated goes inside this directory.
 
+**A file can open, report a duration, and still be broken.** A truncated
+download or a damaged frame run decodes to silence: it transcribes to a few
+characters, passes every cheap check, and becomes an item that looks complete
+and plays as nothing. Inductor decodes each recording end to end before placing
+it, caches the verdict beside the fingerprints, and the `media` stage refuses
+audio that fails — everything else in the graph depends on `media`, so a broken
+file is stopped before anything processes it. Sampling the opening seconds does
+not find this; the damage is usually further in, and half a file is worse than
+none.
+
+**A corrupt copy defeats a loudness envelope.** The envelope is computed from the
+audio, so a damaged duplicate of a recording already held correlates with nothing
+and reads as new — the dedup keeps it *because* it is broken. Check that audio
+decodes before trusting any acoustic comparison of it.
+
 **A cache that is not there reports every recording as untranscribed.** Tools
 have resolved paths that had stopped existing and raised nothing: `rglob` on a
 missing directory returns nothing, and a missing author file just means a name
@@ -393,9 +536,9 @@ never gets filled in. One enrichment run sent the model `some-creator` instead o
 a scan returns zero, check the directory before believing it.
 
 **A `--dry-run` that calls models still spends money.** It means "write nothing",
-not "do nothing": it analyses and submits the review batch. And a killed process
-does not cancel a submitted batch — adopt it with `--recover <batch-id>` rather
-than paying for the same reviews twice.
+not "do nothing": it analyses and submits the review batch. A killed process does
+not cancel a submitted batch, but it no longer costs twice: the next `run` finds
+it in the journal and takes it up.
 
 **`pgrep -f` matches the command line running it**, and `pkill -f <pattern>` in a
 command containing the pattern kills its own shell. Bracket it: `[p]attern`.
