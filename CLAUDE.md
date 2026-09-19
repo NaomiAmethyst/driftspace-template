@@ -123,7 +123,11 @@ permanent once items reference them.
 ## The pipeline
 
 ```
-  a site mirror, a folder of mp3s, a pack with a README
+  a website, a folder of mp3s, a pack with a README
+        │
+        │  a fetcher, where there is a site to fetch     tools/fetch/
+        ▼
+  a mirror on disk
         │
         │  a parser you write for that one source        tools/mirrors/
         ▼
@@ -140,6 +144,12 @@ permanent once items reference them.
 
 Each arrow is re-runnable and cached. Nothing later in the chain reaches back:
 Hypnotica never transcribes, Inductor never renders.
+
+[`examples/`](examples/) has one recording in every one of those shapes at once —
+the source record a parser left, the item it became, and the transcript. Reading
+the first two side by side is the shortest description of what the middle arrow
+does, and the item's `provenance.generated` is the shortest description of what
+it is honest about.
 
 ## Ingesting new material
 
@@ -167,28 +177,44 @@ For a plain folder of audio with nothing else, skip the parser:
 inductor add ~/audio/some-creator/*.mp3 --author-name "Some Creator" --dry-run
 ```
 
+A sources file may also carry one `kind: Author` document — the creator's own
+bio, picture and links, which a site mirror has and which are otherwise thrown
+away and then reinvented by a model. Whatever it supplies is left out of the
+author page's `needs:`, so nothing later writes over it.
+
 **Leave the source's tags exactly as the source spelled them.** Mapping them onto
 the registry is a later, separate step that a model does per creator. Cleaning
 them here loses the evidence of what they actually said.
+
+### 1b. Get the mirror, if there is a site
+
+`tools/fetch/` holds three small fetchers: one that mirrors any site, one that
+takes WordPress through its REST API instead of its HTML, and one for hosts that
+serve a page per recording with the audio on a different domain. Take the
+machine-readable seam where a site offers one — a WordPress `media` endpoint
+records which post each attachment belongs to, which turns matching write-ups to
+audio from a guess into a lookup.
+
+Both failure modes there look like success: a paginated fetch that never
+advances the page number gives you one page repeated, and a mirror that was
+rate-limited halfway gives you an archive missing its second half in silence.
+Count what you got against what the site claims before you parse any of it.
 
 ### 2. Write the parser in `tools/mirrors/`
 
 One file per source, named after it. They are disposable by design: the source
 record is the stable interface, the parser is not. Write it, run it, keep it for
-when the site changes. See [`tools/mirrors/README.md`](tools/mirrors/README.md).
+when the site changes.
 
-Before writing one, **find the data seam** — it is rarely the rendered HTML:
+The one thing to know before you open the directory: **find the data seam, and
+it is rarely the rendered HTML.** Nearly every platform ships the same page as
+something machine-readable, and parsing that instead is the difference between a
+parser that survives a redesign and one that does not.
 
-| platform | where the data actually is |
-|---|---|
-| WordPress | `posts*.json`, or per-post `index.html` under date paths |
-| WooCommerce | `/product/<slug>/index.html` |
-| VirtueMart | `*-detail.html`, description in `.product-description` |
-| MediaWiki | article pages; tracklist tables |
-| JS-paginated shop | **the captured AJAX responses**, not the HTML |
-| Next.js | `__NEXT_DATA__` |
-| Bandcamp / Gumroad | the embedded JSON blob in the page `<script>` |
-| A pack README | one block per track; write the block splitter first |
+[`tools/mirrors/README.md`](tools/mirrors/README.md) is the rest of it — where
+the seam is on each platform, the worked examples, and what a parser owes the
+source record. It is kept there rather than here so there is one table to be
+wrong rather than two.
 
 ### 3. Check before you trust
 
@@ -302,6 +328,60 @@ a fingerprint index (device and inode, checked against size and mtime) and an
 item index (size and mtime per item file), both under `cache/inductor/`. Delete
 either one and the next run is merely slow.
 
+### 5. Recordings with no words in them
+
+A transcript answers "what is said here", and for a great deal of audio the
+honest answer is nothing: tone tracks, drones, music, breathing, wordless voice.
+A speech model cannot return that answer. Handed audio with no speech in it, it
+returns the stock phrases of its training data — `Thank you.`, `You know,`,
+`Thanks for watching` — and they arrive looking exactly like a transcript. In
+this library that produced ninety-three transcripts of pure invention, thirty
+hours of audio, every one of them from the same place: a retry that reran
+transcription with the voice gate off whenever the first pass looked too sparse,
+and kept whichever result had *more words*. On silence the gate is right and the
+retry cannot lose, because invention always beats nothing.
+
+**A stronger speech model is the wrong instinct.** Measured over sixteen
+five-minute windows, the larger model returned *fewer* words than the small one
+on fifteen of them — it hallucinates less, but it still hallucinates, and on the
+one clip with real sparse narration the two agreed to within two words. Nothing
+is gained. The gate was never the problem; the keep-test was. Compare
+*substantive* words — strip the known residue first — and be willing to record
+that a recording has no speech at all.
+
+Then ask the sound instead of the speech, with instruments that fail in
+different directions:
+
+- **The spectrum** is arithmetic. No model, no GPU, no network, and for a tone
+  track it recovers the whole design: the carrier each ear hears and the
+  difference between them, which is the beat the listener feels and which exists
+  nowhere in the file. Measure the channels separately — summing them to mono
+  manufactures exactly the beat a binaural track does not have, and reports every
+  such recording as pulsing when it is doing nothing of the kind.
+- **A multi-label ontology tagger** scores each class on its own, so "somebody is
+  speaking" does not compete with "there are mouth sounds". That independence is
+  what makes it usable as a gate.
+- **A zero-shot audio-text model** ranks whatever phrases you hand it, so it
+  describes far better and can be given the collection's own vocabulary — at the
+  price that it cannot decline.
+
+**A ranking is not an identification, and the margin will not tell you which you
+have.** Offered a label set with no word for what it was hearing, the zero-shot
+model called sixty silent tone tracks "whispering close to the microphone"; given
+a list of household noises it called sixty-five of them "a car engine". The
+margin over the runner-up was *larger* for the deliberately wrong vocabulary than
+for the right one, so every margin threshold admitted more nonsense than it kept
+real answers. Only the absolute similarity separates them. Put a floor on it, say
+so in the record when nothing cleared the floor, and never let a forced answer
+reach whatever writes the entry.
+
+**Interjections are content, not residue.** `Oh`, `Mm`, `Ah` are what a wordless
+recording is made of; counting them as invention mistakes it for a broken one.
+Including them here over-counted the damage in this library by a factor of two —
+191 transcripts against a true 93 — and would have thrown away correct
+transcriptions of moaning and breath. Keep the residue list to training
+boilerplate and nothing else.
+
 ## Resolving ambiguity
 
 When a file's name cannot be trusted, escalate in this order and stop at the
@@ -399,6 +479,26 @@ is silent and permanent.
   entry that does not say is left unmarked, because telling somebody their own
   writing was machine-made is the one error worth ruling out. `inductor
   attribute` fills it in for entries that predate it.
+- **A creator page can be told rather than guessed.** `_author.yaml` is written
+  from the `kind: Author` document in the sources file where there is one, and
+  what it supplies is left out of that page's `needs:` so nothing later
+  overwrites it. What is not supplied is asked for: a synopsis from a model, an
+  avatar from the renderer, both marked in `provenance.generated`. The point of
+  the record is that a mirror of somebody's site already has the real thing.
+- **`sound:`** is what a recording sounds like, for the recordings that do not
+  say anything: the steady tones and the beat between the ears where there are
+  any, the sound classes heard in it, and how sure the tagger is that anybody is
+  speaking. It sits beside `acoustic:` and is written by the same kind of pass —
+  measured into the cache keyed by fingerprint, then applied onto the entries,
+  because the site reads `content/` and nothing else. Where a recording has no
+  words, this is not a footnote about the entry; it is the entry.
+- **An image URL carries a version, the file on disk does not.** A cover is
+  served from a path built out of the author and the id, and that path does not
+  change when the picture behind it does — so a redrawn cover goes on showing the
+  old one in every browser and every service worker that has it. The URL carries
+  a short digest of the file's contents (`…/cover.png?v=80a117d9eeb0`). Contents
+  rather than a timestamp, so the same picture keeps the same URL after a copy, a
+  clone or a restore instead of throwing away a cache that was perfectly good.
 - **`cover_prompts:`** holds the image prompt in both styles — `tagged` for
   SDXL-family renderers, `natural` for Flux/SD3-family ones — so changing
   renderer is a flag, not another pass over the library.
@@ -475,6 +575,98 @@ an artefact that arrived with the source may not use the extension or the
 spelling the generator would have chosen.
 
 
+**A font can report a glyph and then draw nothing.** One of the faces here
+returns a valid glyph index and a correct advance width for most of its
+lowercase, and rasterises an empty outline — no error, nowhere. Because the
+advances stay right, the letters that survive are spaced as though the missing
+ones were there, so what comes out reads as a word rather than as damage: one
+creator's name was set as "CesS", another's as "Ct". Measure every character
+before committing to a face. Three faces turned out to be implicated across 876
+pictures rather than the one that was obvious, the third failing only on titles
+containing a sharp sign — so ask per picture, not per font, and a face that can
+set most names is worth keeping for them.
+
+**A stamp has to record what produced the thing, not what was asked for.** The
+artwork stamp held the prompt, the renderer and the words, and not the face they
+were set in — which is the one field that differs exactly when a picture has gone
+wrong, because the face is substituted only when the requested one cannot draw
+the text. A picture ruined that way was indistinguishable, to every check there
+was, from one drawn perfectly. Whatever chooses the outcome belongs in the record
+of it; anything else is a record of the request.
+
+**A control character survives every cleaner you have.** A `\x04` in the middle
+of a word reached a library from a rip and sat there through every pass: not
+whitespace, so nothing trimmed it; not punctuation, so nothing cleaned it; and it
+slugs away to nothing, so the filename looked perfect. It surfaced only where six
+fonts in turn were asked for a glyph and none of them had one. Strip control
+characters where text enters, and leave everything above ASCII alone — the same
+pass must not touch an accent, a dash or a script it does not recognise.
+
+**A field written by several passes over several years holds several
+vocabularies.** One recording's "where did this transcript come from" held six
+different things across the library: a model name, a model name with a flag after
+it, the word "transcript", the word "None", the word "whisper", and "source".
+Three of those say nothing about provenance, and the page was reading anything
+that was not "source" as "automatic" — asserting to the reader something nobody
+had recorded. When a field has drifted, say what is known and stop: "how it was
+made was not recorded" is a true sentence and "automatically generated" is not.
+
+**Prose is not preformatted.** A transcript that arrives with the recording has
+no timestamps, so it fell through to the branch that renders a block of `<pre>` —
+and a supplied transcript is one paragraph per line with lines running to five
+hundred characters, so the panel became a wall of monospace that scrolled
+sideways. The fallback branch of a renderer gets the material the main branch was
+not designed for, which is exactly the material worth looking at.
+
+**A refusal has to be written down, or it is not a decision — it is a question
+asked again every run.** A pass that looks at a recording and correctly concludes
+there is nothing to make must record that conclusion somewhere the scheduler
+reads, or the scheduler will keep asking. Two hundred and seventy recordings were
+re-examined on every run, for ever, because "too little transcript to analyse"
+lived only in the return value. Key the refusal to whatever it was a judgement
+about — here the transcript — so it expires by itself when that changes, and no
+stale refusal outlives its reason.
+
+**Declining is not failing, and reporting it as failure buries the real ones.**
+"Nothing on disk to write an entry from" and "the batch never came back" want
+different words in the log. Forty-eight of the first printed as hard failures and
+made the run look broken; the handful of genuine failures were indistinguishable
+in the noise.
+
+**A repair that writes to a different name than the finder looks for never
+takes.** A damaged `.m4a` was repaired by re-encoding to `.mp3` — and the routine
+that answers "where is this recording placed?" preferred `.m4a`. So the repair
+landed *beside* the broken file and was never consulted: the check stayed
+unsatisfied, the re-encode ran again on every run, and the site went on serving
+the damaged copy. Whoever writes the fix and whoever looks for it must agree on
+the name. When a fix supersedes something, remove what it replaced — but prove
+identity first: a shared filename is no evidence of a shared recording, and two
+source records can collide on one, so require the file you are about to delete to
+be demonstrably the same one you just rewrote.
+
+**Use the identity the library records, not one you can recompute.** A resume
+point stored a computed `<author>-<stem>` id while everything else matched on the
+entry's declared `id:`. They agree only until a filename carries its own author
+prefix — `somecreator/somecreator-third-session.yaml` computes to
+`somecreator-somecreator-third-session` — and then the saved list names nothing
+and takes the whole resume with it. If a document declares an identifier, that is the
+identifier.
+
+**A value that prints like a number and compares like a string rewrites your
+library every run.** Caches decoded with `UseNumber` keep an integer an integer,
+but `json.Number` is a string type, so the YAML writer quoted every measured
+figure — `beat_hz: "8.05"` — and reading it back gave a string that never
+compared equal to the float that produced it. The equivalence check said "changed"
+on 5,850 entries, on every run, and rewrote them all. Nothing errored. It showed
+the way these always show: a count that never falls.
+
+**Compiling is not installing.** `go build ./...` type-checks and writes no
+binary; the tool on your `PATH` is whatever was last built to `bin/`. A whole
+afternoon of "why is my change not taking effect" was two separate instances of
+this, in two repositories, on two different days — the second one after the
+lesson was already written down for the first. Check the binary's timestamp
+before you debug anything else.
+
 **Filenames lie, in both directions.** Deliberate noise (`Bl00d3y_r3l34s3_FINAL2`), a
 `-Custom` suffix that does not mean a custom, `Mixdown` copies beside titled
 ones. In one library 112 recordings were claimed by two items each;
@@ -489,6 +681,18 @@ recordings. One shop had 1,184 rows over 1,085 recordings, and eleven rows
 sharing a title disagreed about what they did while pointing at one performance.
 Where a group like that disagrees about a field, at most one row is describing
 the audio, so the field is dropped rather than picked from.
+
+**What is missing from the library is often missing on purpose.** Before writing
+an importer for an archive that looks unharvested, measure what it would actually
+add. One shop mirror here held ninety-two files and none of them were in the
+library, which looked like an oversight worth a hundred lines of parser: ninety
+of the ninety-two are named `sample-` or `-DEMO`, ninety-one run under five
+minutes, and exactly one is a release. The shop sells the recordings and mirrors
+the previews. Across five such archives, 269 unimported files turned out to be
+244 previews and about 25 real recordings — and an importer without a duration
+floor would have added all 269 as though they were releases. Count what you would
+gain before you build the thing that gains it; the answer here was 34 write-ups
+and some fifty recordings, not the fourteen hundred the file counts suggested.
 
 **Preview clips are the main contamination risk.** They run a flat 60 or 110
 seconds. Only duration reliably tells a teaser from a release; a name-based

@@ -1,0 +1,58 @@
+# What a parser leaves behind: one `kind: Author` document for the creator, and
+# one `kind: Source` per recording, `---` separated in the same file.
+#
+# The author record is why the creator page beside this one has her own links and
+# her own photograph rather than a model's guess at both. Anything supplied here
+# is left out of that page's `needs:`, which is what stops a later pass writing
+# over it.
+#
+# The recording's tags are the words the posting used and nothing else. `[F4A]`,
+# `[PMR]` and the rest are not registry tags and must not be written as though
+# they were: `inductor tagmap` rules on a creator's vocabulary as a separate,
+# later step, and cleaning them here would destroy the evidence of what was said.
+#
+# The description is the creator's, copied from her own posting -- which is what
+# `provenance.description_from_source` in the item asserts, and why that
+# assertion has to be true.
+apiVersion: inductor/v1
+kind: Author
+id: naomi-persephone-amethyst
+name: Naomi Persephone Amethyst
+url: https://amethyst.name
+links:
+  website: https://amethyst.name
+image: /srv/library/art/naomi-persephone-amethyst.jpg
+language: en
+explicit: true
+---
+apiVersion: inductor/v1
+kind: Source
+audio: /srv/library/audio/naomi-persephone-amethyst/Sleepy-Hypno-1_mixdown.mp3
+title: Sleepytime Trance
+also_titled:
+- '[F4A] sleepytime trance [non-erotic][PMR][sleep][insomnia]'
+author: Naomi Persephone Amethyst
+date: '2025-11-18'
+explicit: false
+categories:
+- Audio
+- Hypnosis
+tags:
+- F4A
+- non-erotic
+- PMR
+- sleep
+- insomnia
+duration: 711.9
+description: |-
+  <p>This file is a guide to sleep and induces a trance. There is nothing erotic about it. It does install a suggestion to help get to sleep quicker the next time you listen to this file, but nothing else. There is no wakener at the end, instead it drops you off to sleep.</p>
+summary: |-
+  A non-sexual sleep hypnosis track featuring progressive muscle relaxation and conditioning for faster sleep on future listens
+source_url: https://amethyst.name/sleepytime-trance
+links:
+  post: https://amethyst.name/sleepytime-trance
+  audio: https://amethyst.name/wp-content/uploads/2025/11/Sleepy-Hypno-1_mixdown.mp3
+  discussion: https://www.reddit.com/r/QueerEroticHypnosis/comments/1p70ryn/f4a_sleepytime_trance_noneroticpmrsleepinsomnia/
+provenance:
+  metadata_source: the creator's own posting
+  identified_by: shipped with the recording

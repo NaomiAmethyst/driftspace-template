@@ -73,3 +73,36 @@ audio, and duplicate claims on the same file. Read those numbers against what
 you expected before you spend a transcription run on them: a shop that says 971
 products and a source file with 35 records means you found the listing page, not
 the catalogue.
+
+## Saying who the creator is
+
+A sources file may also hold one `kind: Author` document. A mirror of somebody's
+site has their bio, their picture and their links sitting right there, and
+without somewhere to put them the pipeline discards all three and then asks a
+model to invent a synopsis and draw an avatar — both strictly worse than what
+the site already said.
+
+```yaml
+---
+apiVersion: inductor/v1
+kind: Author
+name: Some Creator
+url: https://some-creator.example
+links:
+  website: https://some-creator.example
+image: /path/to/their-avatar.jpg
+description: |
+  <p>What they say about themselves, as they wrote it.</p>
+language: en
+```
+
+Only `name` is required; the id is slugified from it unless you give one.
+Anything supplied here lands on `content/<creator>/_author.yaml` and is left out
+of that page's `needs:`, which is what stops a later pass writing over it. It is
+not marked generated either, because it was not.
+
+## A real one
+
+[`examples/sleepytime-trance.source.yaml`](../examples/sleepytime-trance.source.yaml)
+is an actual source record, next to the item it became. The difference between
+the two files is what `inductor run` does.

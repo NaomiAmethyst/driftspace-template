@@ -24,15 +24,54 @@ transcribe:
   remote: ""
   remote_dir: ~/inductor-stt
   model: distil-large-v3
+  # Offered a transcript the first model left too thin for the running time.
+  # Kept only if it finds words the first one missed -- filler does not count.
+  fallback:
+    - large-v3
   language: en
   batch_size: 16
   workers: 6
+  sound:
+    # What a recording sounds like, asked of the audio rather than of the words.
+    # Two models: a fixed-ontology tagger, which scores each class on its own and
+    # is therefore the gate for "is anybody speaking"; and a zero-shot model,
+    # which ranks the phrases below and cannot answer "none of these".
+    #
+    # These labels are the generic set. Replace them with your own collection's
+    # subject matter -- a label that is never offered is never returned, and the
+    # zero-shot model will hand back the nearest thing on this list however badly
+    # it fits. `floor` is what stops that: below it the answer is recorded as not
+    # matching rather than believed.
+    labels:
+      - a person speaking
+      - whispering close to the microphone
+      - singing
+      - music with no voice
+      - a pure sine wave tone
+      - a low humming drone
+      - white noise or static
+      - silence
+      - breathing
+      - laughter
+      - rain, water or wind
+      - rustling, tapping and handling noise
+      - a crowd or background chatter
+      - machinery or engine noise
+      - birds or animals
+    threshold: 0.25
+    floor: 0.35
 
 enrich:
   # Any model your OpenRouter account can reach. A :batch suffix on the review
   # model routes it through OpenRouter's batch API, which is cheaper and slower.
   analysis_model: deepseek/deepseek-v4-flash
   review_model: google/gemini-3.8-flash:batch
+  # Offered the reviews the first model will not answer. Asked directly,
+  # not at batch latency, because these are the leftovers.
+  review_fallback:
+    - z-ai/glm-5.3-flash
+    - minimax/minimax-m3
+    - moonshotai/kimi-k2.5
   adjudicator_model: anthropic/claude-opus-5
   workers: 12
   batch_size: 150

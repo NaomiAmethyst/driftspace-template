@@ -1,0 +1,26 @@
+# An excerpt. The real one has 21 segments and the whole text; this keeps
+# the first three so the shape is readable. Transcripts live beside their item
+# as `<stem>.transcript.yaml` and are keyed to it by `item:`.
+apiVersion: hypnotica/v1
+kind: Transcript
+item: naomi-persephone-amethyst-sleepytime-trance
+model: distil-large-v3
+duration: 711.934563
+covered: 709.62
+segments:
+- start: 1.01
+  end: 30.51
+  text: |-
+    This file is a guide to sleep and induces a trance. There is nothing erotic about it. It does install a suggestion to help get to sleep quicker the next time you listen to this file, but nothing else. There is no wakener at the end. Instead, it drops you off to sleep. Before you begin, drink some water. Brush your teeth. Set your alarm. Plug your phone in. Use the bathroom if you need to.
+- start: 30.7
+  end: 60.78
+  text: |-
+    and make your room dark and quiet. You can use headphones if you can sleep with them on, but it works just played into the room as well. If you get interrupted, just start over. If anything is painful or uncomfortable, only do what is comfortable. The trance will work regardless. Pause this and go and do these things now if you haven't already. Already? Good.
+- start: 61.65
+  end: 97.33
+  text: |-
+    Get all comfy and cozy. Take all the time you need to get comfy. Go ahead. Shift around if you need to. Comfy now? Good. Just listen to my voice as I speak. I'm going to help you relax and get into a nice, wonderfully relaxing trance. Just relax yourself now and realize there's nothing you really need to do. Close your eyes.
+text: |
+  This file is a guide to sleep and induces a trance. There is nothing erotic about it. It does install a suggestion to help get to sleep quicker the next time you listen to this file, but nothing else. There is no wakener at the end. Instead, it drops you off to sleep. Before you begin, drink some water. Brush your teeth. Set your alarm. Plug your phone in. Use the bathroom if you need to.
+  and make your room dark and quiet. You can use headphones if you can sleep with them on, but it works just played into the room as well. If you get interrupted, just start over. If anything is painful or uncomfortable, only do what is comfortable. The trance will work regardless. Pause this and go and do these things now if you haven't already. Already? Good.
+  Get all comfy and cozy. Take all the time you need to get comfy. Go ahead. Shift around if you need to. Comfy now? Good. Just listen to my voice as I speak. I'm going to help you relax and get into a nice, wonderfully relaxing trance. Just relax yourself now and realize there's nothing you really need to do. Close your eyes.

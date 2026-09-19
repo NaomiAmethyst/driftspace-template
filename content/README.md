@@ -154,3 +154,9 @@ inductor check                 # source records against what is here
 Paths inside an item are written **relative** — `../../media/audio/...` — so the
 whole library can be moved or cloned. Anything outside it stays absolute.
 `inductor paths --write` normalises a tree that predates this.
+
+## A real one
+
+[`examples/sleepytime-trance.item.yaml`](../examples/sleepytime-trance.item.yaml)
+is a finished entry — tags, spoilers, acoustics, provenance and all — beside the
+source record it was built from.

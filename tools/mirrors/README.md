@@ -8,9 +8,20 @@ parser is not. Write it, run it, keep it for when the site changes. Do not try t
 make one parser handle two sites — the second site will be different in a way
 that quietly breaks the first.
 
-[`example_wordpress.py`](example_wordpress.py) is a worked one: a WordPress
-mirror plus a folder of audio in, a source file out. Copy it and change it,
-or read it for the shape and write your own.
+Two worked ones, and they are the two shapes you will meet:
+
+- [`example_wordpress.py`](example_wordpress.py) — a WordPress mirror plus a
+  folder of audio in, a source file out. The write-ups and the audio arrive as
+  separate piles and have to be married by inference, which is most of its
+  length and all of its risk.
+- [`example_soundgasm.py`](example_soundgasm.py) — a host that serves one page
+  per recording, where the page names its own audio file. The join is a
+  dictionary lookup and there is nothing to infer. Read it for what a source
+  looks like when it hands you the answer, and for what it still withholds: no
+  dates, and filenames that are hashes.
+
+Copy whichever is closer and change it, or read them for the shape and write
+your own. `tools/fetch/` is what produces the mirror in the first place.
 
 ## 1. Find the data seam
 

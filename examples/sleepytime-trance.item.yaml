@@ -1,0 +1,267 @@
+# The same recording after `inductor run`: a `kind: Item`, which is what the
+# library is made of and what the site reads.
+#
+# One difference from the real library, made on purpose: the cover here is the
+# creator's own artwork with the house nameplate over it, so `provenance.generated`
+# does not list `cover`. In the real library a model drew it and the list says so.
+# `cover_prompts` is recorded either way -- the prompts were written; they just
+# were not used for this picture.
+apiVersion: hypnotica/v1
+kind: Item
+id: naomi-persephone-amethyst-sleepytime-trance
+title: Sleepytime Trance
+author: naomi-persephone-amethyst
+date: '2025-11-18'
+audio: /srv/library/audio/naomi-persephone-amethyst/Sleepy-Hypno-1_mixdown.mp3
+duration: 711.9
+cover: sleepytime-trance.cover.jpg
+tags:
+- 'Voice: fem'
+- 'Audience: anyone'
+- 'Induction: Counting'
+- 'Induction: Progressive Muscle Relaxation'
+- Comforting
+- Conditioning
+- Cosy
+- Countdown
+- Deep Trance
+- Deepener
+- Dreams
+- Gentle
+- Hypnosis
+- No Wakener
+- Non-Sexual
+- Physical Interaction
+- Post-Hypnotic Suggestion
+- Relaxation
+- Sleep
+- Trance
+- Vanilla
+- Wholesome
+categories:
+- Audio
+- Hypnosis
+summary: |-
+  A gentle, non-sexual sleep hypnosis session using progressive muscle relaxation and countdowns to guide the listener into natural sleep
+description: |-
+  <p>This file is a guide to sleep and induces a trance. There is nothing erotic about it. It does install a suggestion to help get to sleep quicker the next time you listen to this file, but nothing else. There is no wakener at the end, instead it drops you off to sleep.</p>
+explicit: false
+spoilers:
+- severity: high
+  disclosure: declared
+  confidence: high
+  timestamp: 0:08:24
+  trigger: |
+    Listening to the recording again
+  effect: |
+    Conditioned sleep onset that compounds with repetition: every future listen is suggested to drop you into trance faster and bring on sleep quicker, eventually causing you to drift off within seconds of starting the file.
+  quote: |
+    You will fall asleep quicker until you start to drift off to sleep within seconds of starting the file.
+  note: |
+    Rated high because the suggestion explicitly compounds with repeated listening, anchoring rapid sleep onset directly to the act of playing the audio. Declared explicitly in the audio introduction and track description.
+provenance:
+  fingerprint: 78ab955a6c80f6d33c4617107d235303
+  metadata_source: the creator's own posting
+  identified_by: shipped with the recording
+  has_author_script: true
+  enriched:
+    tags_added: []
+    analysis_model: null
+    review_model: google/gemini-3.8-flash:batch
+    transcript: dd0c8dc65456362497091628d414f4aa
+  description_from_source: true
+  source_record: naomi-persephone-amethyst.yaml
+  source_key: /srv/library/audio/naomi-persephone-amethyst/Sleepy-Hypno-1_mixdown.mp3
+  generated:
+  - spoilers
+  - summary
+  managed_by: inductor
+script: |
+  # sleepytime trance
+
+  Posted November 18, 2025 by Naomi Persephone Amethyst
+
+  [(Audio)](https://amethyst.name/wp-content/uploads/2025/11/Sleepy-Hypno-1_mixdown.mp3)
+
+  ## Introduction
+
+  This file is a guide to sleep and induces a trance. There is nothing erotic
+  about it. It does install a suggestion to help get to sleep quicker the next
+  time you listen to this file, but nothing else. There is no wakener at the end,
+  instead it drops you off to sleep.
+
+  Before you begin, drink some water, brush your teeth, set your alarm, plug your
+  phone in, use the bathroom if you need to, and make your room dark and quiet.
+  You can use headphones if you can sleep with them on, but it works just played
+  into the room, as well.
+
+  If you get interrupted, just start it over. If anything is painful or
+  uncomfortable, only do what is comfortable. The trance will work regardless.
+
+  Pause this and go and do those things now if you haven't already.
+
+  All ready? Good.
+
+  ## Induction
+
+  Get all comfy and cozy. Take all the time you need to get comfy. Go ahead, shift
+  around if you need to.
+
+  Comfy now? Good. Just listen to my voice as I speak. I'm going to help you relax
+  and get into a nice wonderfully relaxing trance.
+
+  Just relax yourself now, and realize there's nothing you really need to do.
+  Close your eyes. You don't need to move or speak. Take a couple of deep breaths
+  for me…. in, and out… imagine that with each breath you take, you're breathing
+  out all the cares and anxieties of the day from your body, and replacing it with
+  cool fresh oxygen… you can relax and allow whatever happens to happen.
+
+  I'm going to guide you through relaxing each part of your body so that you can
+  relax even deeper. We're going to start with your toes. They're wonderfully
+  relaxed right now, but we want them even more relaxed. Curl your toes as tightly
+  as you can and hold them there. Notice the tension. It might even start to hurt
+  a little. That's a good sign, it means you're pushing all of that stress out and
+  once I tell you to relax your toes again, they'll be so deeply relaxed. Relax
+  your toes and feel how deeply relaxed they are, so much more than they were
+  before. Good. That means it's working.
+
+  Now focus on your calf muscles. Point your toes as far as you can. Feel the calf
+  muscles in your lower legs engage. So tense. Maybe even burning a little. Good.
+  Hold it tightly and imagine how nice it will feel when you can relax them again.
+  How peaceful that will be. Now, relax again. Let your legs feel so relaxed like
+  jelly. That's good. It means you are relaxing very deeply.
+
+  Next, focus on your thigh muscles. Bend your knees and press your heels into the
+  bed, or if you are on your side, press your heels into your butt. Feel the
+  tenseness in your upper legs. Maybe it starts to burn a little bit? That's a
+  good sign. Keep pressing, tighter and tighter. Think of how good and relaxed it
+  will be after I tell you to relax again. Now, relax your legs. Let them be
+  wonderfully loose, relaxed, like putty. Good. You're relaxing so well for me.
+
+  Now, focus on your butt. Clench it tightly. You might notice that it starts to
+  ache. Hold it and feel the way your muscles feel. Feel them struggling, working
+  so hard. And now relax it and feel how good it feels to relax again.
+
+  Now that your lower body is very relaxed, I'm going to guide you through
+  relaxing your upper body.
+
+  Focus on your tummy. Tense it up for me. Tight. Make your core feel so tense.
+  Hold it for me just a little longer. And now relax. Good.
+
+  Focus on your hands. Turn them into fists. So tight and tense. Feel the energy
+  leaking out of them as you continue to tense them. You might feel them start to
+  ache. That's a good sign. Now, relax your hands. Feel how loose they feel now
+  that they're relaxed. They're relaxed so much deeper now.
+
+  Now focus on your arms. Tense them up. So tight that they can't move anywhere.
+  You might notice they're starting to burn. Keep them tense for me. Let them
+  ache. Good. Now, relax them. Notice how relaxed they feel now. Good.
+
+  Now focus on your shoulders. Tighten them up, so tense, so tight. Make them as
+  tense as you possibly can. Let them burn and ache. Think about how nice and
+  relaxed they will feel once I tell you to relax them. Good. Now relax your
+  shoulders. Let them drop and turn into a nice, relaxed putty.
+
+  Now your lower body is very relaxed and your upper body is very relaxed. Next I
+  am going to help you relax your face, and here's how I am going to do it. In a
+  moment I'm going to have you scrunch up your face and hold it tightly, just like
+  all of your other muscles, and then I'm going to count down and when I get to 1,
+  I'm going to tell you to relax and sleep for me, and you're going to drop into a
+  nice, wonderful, relaxing trance.
+
+  Now, scrunch up your face tightly. As tight as you can. And hold it there. I'm
+  going to count down from 5 to 1, and when I get to 1, I'm going to let you
+  relax. Five… four… three… two… one… relax and sleep for me.
+
+  ## Hypnosis
+
+  In this trance, it's just you and me, together. There is nothing else important.
+  All of those thoughts and worries from the day are gone. They can't bother you
+  here. As you listen to my voice, you'll notice that you feel tired, sleepy. If
+  you drift off part-way through, that's perfectly okay.
+
+  Every time you listen to this file, you will drop into this trance easier. You
+  will fall asleep quicker. Until you start to drift off to sleep within seconds
+  of starting the file.
+
+  Any thoughts that you still have, just acknowledge them, recognize that if
+  they're important, they'll be there tomorrow, but you don't need them right now.
+  Notice they get fuzzy and hard to think about. Just let them go.
+
+  Notice your whole body feeling sleepy. Tired. Like it is a struggle to stay
+  awake, even in this trance.
+
+  I'm going to count down and as I count down, we're going to drift deeper.
+  Further into the gentle darkness. I'm protecting you, so nothing bad can happen
+  here.
+
+  Ten, drifting down… nine, deeper… eight, further away from wakefulness… seven,
+  your senses starting to dull… six, peaceful darkness… five, so deep… four…
+  three… two… one…
+
+  Here we are, deep in a trance, away from the rest of the world. Just you and I.
+
+  In a few moments, I'm going to count down again and send you off to sleep. And
+  when you sleep, you'll have pleasant dreams, though you may not remember them
+  when you wake up. You'll sleep soundly, safely, and when you wake up tomorrow,
+  you'll feel refreshed and ready for your day.
+
+  Now, I'm going to count down, and as I count down each number, you'll feel twice
+  as sleepy as before. You'll feel like all you want to do is drift off to sleep.
+  And that is what you will do. You do not have to wait until I get to the end.
+
+  Twenty, nineteen, eighteen, seventeen, sixteen,
+
+  fifteen, fourteen, thirteen, twelve, eleven,
+
+  ten, nine, eight, seven, six,
+
+  five, four, three, two, one.
+
+  go to sleep.
+acoustic:
+  seconds: 711.9
+  rms: 0.06608
+  peak: 1
+  crest_db: 23.6
+  silence_ratio: 0.182
+  spectral_centroid_hz: 582.1
+  f0_median_hz: 190.1
+  f0_spread_hz: 24.4
+  f0_reliable: true
+  voiced_frames: 160
+  hnr_db: 9.2
+  level_variation: 0.542
+  voiced_share: 0.675
+  brightness_hz: 238.1
+  brightness_spread_hz: 109.1
+  words_per_minute: 108.1
+  speaking_share: 0.973
+  median_pause_s: 0.58
+  longest_pause_s: 3.1
+  voice: fem
+cover_prompts:
+  tagged: |-
+    quiet bedroom at night, soft moonlight through sheer curtains, neatly turned-down bed, glass of water on a wooden nightstand, charging phone screen glowing dimly, deep indigo and lavender tones, warm ambient bedside light, drowsy calm atmosphere, still life, soft focus, 35mm photograph
+  natural: |-
+    A peaceful, dimly lit bedroom at night with moonlight streaming through soft curtains onto a comfortable bed. On a small wooden bedside table sits a clear glass of water next to a charging phone. The room is bathed in gentle cool indigo and soft warm amber light, creating a still, restful, and tranquil mood.
+  negative: people, faces, sexual imagery, text, bright daylight, harsh shadows, clutter
+sound:
+  classes:
+  - Speech
+  - Clicking
+  - Narration, monologue
+  - Speech synthesizer
+  - Female speech, woman speaking
+  - Whispering
+  fits: false
+  tagger_model: MIT/ast-finetuned-audioset-10-10-0.4593
+  voice_confidence: 0.719
+  zeroshot_model: laion/clap-htsat-unfused
+source_url: https://amethyst.name/sleepytime-trance
+also_titled:
+- '[F4A] sleepytime trance [non-erotic][PMR][sleep][insomnia]'
+links:
+  post: https://amethyst.name/sleepytime-trance
+  audio: https://amethyst.name/wp-content/uploads/2025/11/Sleepy-Hypno-1_mixdown.mp3
+  discussion: https://www.reddit.com/r/QueerEroticHypnosis/comments/1p70ryn/f4a_sleepytime_trance_noneroticpmrsleepinsomnia/

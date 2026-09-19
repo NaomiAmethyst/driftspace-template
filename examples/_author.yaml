@@ -1,0 +1,26 @@
+# The creator page, `content/<creator>/_author.yaml`.
+#
+# The mirror of the item beside it. There the description is the creator's and
+# the summary and spoilers are the machine's, and `provenance.generated` is what
+# separates them. Here nothing was machine-written -- the photograph is her own
+# and no synopsis has been asked for -- so there is no `generated` list at all.
+# An entry that does not say is left unmarked, because telling somebody their
+# own writing was machine-made is the one error worth ruling out.
+#
+# `cover_prompts.font` is the face the nameplate uses for this creator's covers;
+# the cover beside this one was drawn with it. The photograph here carries no
+# nameplate -- author images are shown under the name already.
+apiVersion: hypnotica/v1
+kind: Author
+id: naomi-persephone-amethyst
+name: Naomi Persephone Amethyst
+url: https://amethyst.name
+links:
+  website: https://amethyst.name
+language: en
+explicit: true
+image: naomi-persephone-amethyst.author.jpg
+cover_prompts:
+  font: bookish
+provenance:
+  image_source: the creator's own photograph, used as supplied
