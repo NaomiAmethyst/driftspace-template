@@ -8,7 +8,8 @@ parser is not. Write it, run it, keep it for when the site changes. Do not try t
 make one parser handle two sites — the second site will be different in a way
 that quietly breaks the first.
 
-Two worked ones, and they are the two shapes you will meet:
+Three worked ones. The first two are the two shapes you will meet when the
+thing you are importing is a recording:
 
 - [`example_wordpress.py`](example_wordpress.py) — a WordPress mirror plus a
   folder of audio in, a source file out. The write-ups and the audio arrive as
@@ -19,6 +20,16 @@ Two worked ones, and they are the two shapes you will meet:
   dictionary lookup and there is nothing to infer. Read it for what a source
   looks like when it hands you the answer, and for what it still withholds: no
   dates, and filenames that are hashes.
+
+The third is about the people rather than the recordings:
+
+- [`example_author_pages.py`](example_author_pages.py) — the same mirror, read
+  for the creator's own bio, photograph and links, emitted as `kind: Author`
+  records. Without it a creator page carries a synopsis a model wrote and an
+  avatar a renderer drew while their own words sit unread in the mirror. Read
+  it mostly for what it refuses: a picture from anybody else's domain, a
+  login wall that extracts like prose, and a homepage, which is a shop window
+  and not a biography.
 
 Copy whichever is closer and change it, or read them for the shape and write
 your own. `tools/fetch/` is what produces the mirror in the first place.

@@ -182,6 +182,13 @@ bio, picture and links, which a site mirror has and which are otherwise thrown
 away and then reinvented by a model. Whatever it supplies is left out of the
 author page's `needs:`, so nothing later writes over it.
 
+That applies when the page is *created*. For a mirror parsed after the library
+already exists, `inductor authors --only-adopt` puts the record onto the page
+the creator already has. It replaces a field the page marks `generated` and
+stops at one it does not — that being either a person's own words or an earlier
+source's — and takes the adopted fields back off the generated list, because
+they were not. `--overwrite` says to go ahead anyway.
+
 **Leave the source's tags exactly as the source spelled them.** Mapping them onto
 the registry is a later, separate step that a model does per creator. Cleaning
 them here loses the evidence of what they actually said.
@@ -199,6 +206,25 @@ Both failure modes there look like success: a paginated fetch that never
 advances the page number gives you one page repeated, and a mirror that was
 rate-limited halfway gives you an archive missing its second half in silence.
 Count what you got against what the site claims before you parse any of it.
+
+**Reading a creator's bio and picture out of a mirror has three traps, and all
+three produce a confident wrong answer rather than an empty one.**
+
+`og:image` is not necessarily the creator: one site's is a stock photo from an
+image bank, and the creator's actual avatar is the site icon. Take pictures
+only from the creator's own domain, and check the pixel dimensions — a favicon
+and the badge of whatever service they link to pass every other test.
+
+A homepage is a shop window, not a biography. Prices, running times and the
+teaser for the latest release all extract exactly like prose, and four of five
+homepages read this way produced a catalogue rather than a bio. Only an
+`about` page is reliably about them. If you must fall back to a homepage,
+require the creator to introduce themselves *by name*: a bare first-person
+test passes "I am redefining you", which is a line from one recording's
+write-up and became somebody's biography.
+
+And no heuristic tells a product photo from a portrait. Look at the pictures
+before you commit them.
 
 ### 2. Write the parser in `tools/mirrors/`
 
@@ -270,10 +296,24 @@ inductor run --author some-creator           # media, transcribe, analyse, revie
 inductor adjudicate                          # rule on any tag the run wants to add
 inductor adjudicate --apply --write          # after reading the rulings
 inductor retitle --apply rulings.yaml        # a reviewed TitleRulings file
+inductor measured                            # tags the instruments settle; --write to apply
 inductor duplicates                          # anything imported twice
 inductor orphans                             # creator pages and transcripts nothing refers to
 hypnotica -s content build -o www --media link
 ```
+
+**The maintenance commands are opt-in through `--write`, and that is
+load-bearing.** `run` and `ingest` write as their whole purpose and take
+`--dry-run` to hold off; everything that sweeps the library to correct it —
+`adjudicate`, `attribute`, `retitle`, `registry`, `measured` — reports by
+default and changes nothing until asked. That is what makes them safe to try:
+run it, read what it says it would do, run it again with the flag.
+
+One of them shipped reading `--dry-run` instead, so its plain form wrote, and
+somebody checking what it would do added thirteen entries to the registry
+finding out. A single command that inverts the convention is worse than no
+convention at all, because the value of the rule is not having to check which
+kind you are holding.
 
 `run` is a dependency-graph dispatcher, not a loop over stages: it works out
 what each recording is still missing and schedules it across lanes — `disk`,
@@ -382,6 +422,110 @@ Including them here over-counted the damage in this library by a factor of two �
 transcriptions of moaning and breath. Keep the residue list to training
 boilerplate and nothing else.
 
+**A recording with no words in it cannot be keyed by its transcript.** Analysis
+and review are cached against a hash of the transcript, and that is the right
+key while there *is* one: two copies of a recording, or two encodings, share
+their review and the expensive passes are paid for once however many times the
+file appears. Record that a file has no speech, though, and its text is empty —
+so every wordless recording in the library hashes to the same string. Keyed on
+that they do not share a cache, they share an *answer*: one summary, one
+synopsis, one spoiler set, written about whichever tone track was reviewed first
+and filed against all of them. One library had 124 entries keyed that way
+holding 28 write-ups between them — 97 of them the same one, a description of
+a fifteen-second clip of room tone and camera shutters.
+
+Nothing reports it. The dedup that stops a batch asking twice about one key does
+exactly its job, the review returns, and every entry is filled in. It bites
+hardest where it can least be afforded: the one prompt built entirely from what
+the audio was *measured and heard* to be, with no transcript in it anywhere — the
+pass that exists precisely to describe a recording from its sound alone — ran
+once for the whole collection.
+
+Key a wordless recording by its own audio instead. And when the real review
+arrives, treat the inherited fields as replaceable even though they are not
+empty: the guard that protects what is already there is protecting another
+recording's work. Replace only what a pass wrote, never what a person did.
+
+## Tags the instruments settle
+
+Most tags are somebody's claim — the creator's, in the source record, or a
+review model's, from reading a transcript. Both are worth having, and neither
+can answer "is there a binaural beat in this file", which is arithmetic.
+
+A measurement-derived tag skips the model and the adjudicator both, because
+there is no opinion to rule on: a rule either holds of the file or it does not.
+What it must not skip is the registry, because a tag with no definition is a
+word nobody can browse by and nobody can argue with. Three properties keep that
+honest:
+
+- **Every rule names the guard that makes its instrument trustworthy**, and
+  declines rather than guessing when the guard fails. A recording whose dominant
+  partial wanders has no carrier to report; one nobody ran the tagger over
+  cannot be called wordless. Silence is the right answer far more often than a
+  tag is.
+- **The ruleset is versioned**, and the version is stamped beside the tags it
+  produced. Move a threshold and you leave behind tags that were right under the
+  old table and are not under the new one; without the stamp there is no way to
+  find them again among thousands of entries.
+- **A measurement that contradicts a claim does not overwrite it.** It is
+  recorded as a dispute, aggregated per creator — because one file is an error
+  and forty is a habit, and a creator who labels tone tracks "binaural" when no
+  beat is measurable is telling you something about the rest of their metadata
+  that is worth more than the correction.
+
+Cap how many one entry may carry. These exist to answer the question a browser
+starts with, not to crowd out the editorial tags that answer the rest.
+
+**Look at your own distribution before trusting any threshold.** Half of these
+numbers are instrument guards and half are judgements about the material, and
+the second half do not travel. "Markedly slower than conversation" is 70 words
+a minute against most speech — and against a library of hypnosis whose median
+is 94 and whose lower quartile is 74, it describes 21% of the collection and
+says nothing about any of it. Moved to 55, roughly the tenth percentile, it
+picks out 909 recordings instead of 1,933. Neither number is wrong; only one
+of them is about this library. A threshold near the median of your material is
+not distinguishing anything, and the way to find that out is to look before
+applying, not after.
+
+Keep them in the config rather than the code, so the library can say what it
+means. Then record the ones it moved beside the tags they produced: the
+ruleset version answers "which code wrote this" and cannot answer "under which
+numbers" once the numbers belong to the library, and an entry tagged under a
+threshold that has since moved is only findable if it says so.
+
+**Check what your registry already calls each of them before you apply any of
+it.** A ruleset arrives with names of its own, and a vocabulary that has been
+growing for a while has words for half of them: `Whispers` where the rule says
+`Whispered`, `No Words` where it says `Wordless`, `Minimal Speech` where it
+says `Sparse Speech`. Leave those alone and the pass forks the vocabulary —
+two whisper tags, three thousand recordings split between them, and nobody
+able to browse by whispering.
+
+The dispute is the part that fails silently. A claim is only ever contradicted
+by a rule awarding *the same string*, so a rule spelled `Whispered` cannot
+dispute a single one of the 1,930 entries claiming `Whispers`. Here that left
+the whole mechanism running on the two rules whose names happened to match
+already: 499 disputes, all of them one of two tags. Mapping the three names
+onto the library's own spellings took it to 1,849, and dropped the additions
+from 2,412 to 1,922 because five hundred of them turned out to be tags the
+entries already carried. `measured.tags` in `inductor.yaml` is where that
+mapping goes; an empty value there switches a rule off entirely.
+
+**A rule gated on a field most of your library does not have awards nothing,
+and says so nowhere.** Two of the fifteen rules here test the transcript's
+`speech` verdict, which the transcriber only started recording partway through
+the library's life: 79 transcripts out of 10,755 carry it. So the rule for "no
+words in this at all" can never fire, on a collection with hundreds of
+wordless recordings, and the only sign is a tag that never appears in the
+tally. When a ruleset reads a field, count how many entries actually have it
+before reading anything into a zero.
+
+And be careful what such a rule is allowed to name. Pitch is measurable and
+pitch is still not gender: a rule naming the speaker's is a judgement wearing a
+measurement's clothes. So is any rule whose threshold you cannot defend — leave
+it unwritten until you have calibrated it against recordings somebody has
+actually listened to.
+
 ## Resolving ambiguity
 
 When a file's name cannot be trusted, escalate in this order and stop at the
@@ -472,7 +616,13 @@ is silent and permanent.
   `../../media/cover/<creator>/<id>.png` from an item, `media/audio/...` for a
   source key — so the whole directory can be moved or cloned. Anything outside
   it, a read-only archive mount above all, stays absolute. `inductor paths
-  --write` normalises a tree that predates this.
+  --write` normalises a tree that predates this. **The symlinks under `media/`
+  follow the same rule and are the half that a move actually breaks**: a stale
+  reference is reported by `check`, while a stale link is a cover that silently
+  stops existing, and the only sign of it is a site build reporting artwork it
+  cannot find. `paths --write` repairs those too, matching the longest tail of
+  each dead target against the tree, and reports the ones it cannot account
+  for rather than pointing them somewhere new.
 - **`provenance.generated:`** lists, by field name, what this toolchain wrote
   rather than found — `[cover, spoilers, summary]`. The site marks those lines
   and leaves the rest alone. Nothing is inferred from how a value reads: an
@@ -504,6 +654,40 @@ is silent and permanent.
   renderer is a flag, not another pass over the library.
 
 ## Things that have already cost time
+
+**A batch tagger puts the artist in the title field, and `inductor add` prefers
+the tag.** Preferring the tag is still right — it is where a colon and a
+subtitle survive, so a file called `GoonerIsland` becomes "Nichole Air: Gooner
+Island" — but a title that is only the creator's name is the absence of one,
+and two files tagged that way both claim it. The second then gets a numeric
+suffix, which reads as a duplicate and is not.
+
+**A variant marker in the filename and not in the title makes two recordings
+one.** Two cuts of one session, one with binaural tones and one without, can
+share an ID3 title exactly; so can the F4F and F4M dubs. The answer is the
+`variant:` field, not a mangled title — take the marker off the filename when
+the title does not already carry it. Without it they collide on id, and a
+proposed id ending `-2` is a warning, not a resolution.
+
+**The library can hold the preview and not the release.** A site that publishes
+a teaser and sells the full recording leaves you with the teaser, and a later
+pack turns up with the real thing. A loudness envelope correlates those two at
+1.0000 — because the short one is *inside* the long one — which reads exactly
+like a duplicate and is the opposite. Compare durations before believing a
+perfect correlation.
+
+**Variants correlate as high as re-encodes do.** A loudness envelope cannot see
+a binaural bed or a swapped pronoun, so two dubs of one performance correlate
+at 1.0000 and a no-binaurals mix at 0.984 — against 0.996 for a genuine
+re-encode of a file already held. The figure will not separate them; the
+filename and the catalogue will. Decide what a variant is for your library
+before you let a number cull anything.
+
+**`inductor add` is for audio with nothing beside it.** It reads ID3 and the
+filename, and that is all there is. Where a mirror exists the mirror knows the
+titles, the write-ups, the dates and the URLs; reaching for `add` because it is
+one command imports a pack named after its files and hands a model the job of
+inventing descriptions it had no need to invent. Write the source records.
 
 **A verdict is not a value, and a model will put one in the value's field.**
 Asked to review a whole library one item at a time — is this title right, does

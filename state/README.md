@@ -8,6 +8,7 @@ to make them again.
 decisions/     tag maps and rulings: what a person decided, and why
 transcripts/   what was heard, keyed by the audio's fingerprint
 enrichment/    what the models made of it, keyed by the transcript's
+sync/          the sync endpoint's store, if you run one
 ```
 
 **Do not delete this directory.** A library of a few thousand recordings is
@@ -25,6 +26,29 @@ over an unchanged transcript costs nothing.
 That is also what makes this directory survive a rebuild. Delete `content/`,
 re-import from `sources/`, and the run picks every transcript and every analysis
 back up out of here. Delete this, and the same rebuild starts from silence.
+
+## sync/
+
+Only there if you run `hypnotica serve --sync state/sync`. It holds what your
+devices have posted to each other and any share you have published, and it is
+the one directory here that **nothing on this machine can read**: the blobs are
+encrypted in the browser under a key the server is never given.
+
+```
+sync/g/<group>/s/     one library's devices, their encrypted slots
+sync/pf/<id>.json     a published share: read-only, its own key
+sync/pr/<id>.json     a pairing, five minutes and one use
+```
+
+`hypnotica sync --dir state/sync` lists what is stored and `--rm <id>` removes
+a group or a share. That is the only safe way to delete from here: a file you
+cannot read is a file whose cost you cannot judge.
+
+It is not a backup of what the browsers hold, and it is not a way back in.
+Losing every device loses the key and leaves the ciphertext inert — the export
+file is the recovery path, the same one as for a library that never turned
+sync on. Back this directory up if you like; back up the export file either
+way.
 
 ## decisions/
 

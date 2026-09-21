@@ -92,6 +92,27 @@ predate the convention.
 `provenance.proposed_tags:` holds tags a model wanted and could not have, because
 they are not in the registry. They sit there until `inductor adjudicate` rules.
 
+`provenance.measured_tags:` records the tags the instruments settled on this
+entry, and the version of the ruleset that settled them:
+
+```yaml
+provenance:
+  measured_tags:
+    ruleset: 1
+    thresholds: {slow_delivery_wpm: 55}   # only what this library moved
+    tags: [Production: Binaural, Production: Theta Beat]
+```
+
+It is kept for two reasons. A tag this pass awarded and no longer awards is one
+it may take back; a tag somebody else asserted is not, and without the record
+there is no telling them apart. And when a threshold moves, these are the only
+way to find the entries tagged under the old table. The version covers a change
+to the code; `thresholds` covers a change to the numbers, which live in
+`inductor.yaml` and so cannot be read off the version at all. An entry carrying
+`ruleset: 1` after the rules reach 2, or carrying a threshold the config no
+longer sets, is one to look at again — and there is no re-deriving nine
+thousand recordings to work out which those were.
+
 ## Tags
 
 `tags.yaml` is the registry, and the **only** source of tags. A tag that is not
@@ -153,7 +174,9 @@ inductor check                 # source records against what is here
 
 Paths inside an item are written **relative** — `../../media/audio/...` — so the
 whole library can be moved or cloned. Anything outside it stays absolute.
-`inductor paths --write` normalises a tree that predates this.
+`inductor paths --write` normalises a tree that predates this, and relinks the
+symlinks under `media/` by the same rule — see `media/README.md`, because those
+are what a move breaks without telling you.
 
 ## A real one
 

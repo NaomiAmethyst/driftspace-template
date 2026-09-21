@@ -17,6 +17,28 @@ hundreds of gigabytes, so the default is symlink.
 Nothing here modifies the source audio. Transcoding, where `media.transcode`
 asks for it, writes a new file here and leaves the original alone.
 
+## After moving the library
+
+A link that points *out* of the library is absolute, because that is where the
+file is. A link that points *inside* it — a cover standing in for another
+cover, most often — is relative, so the whole directory can be moved or cloned
+and still find itself.
+
+Move a library built before that was true and the second kind all break at
+once. Nothing errors: `inductor` does not read them, and the only thing that
+does is the site build, which reports artwork it cannot find and carries on.
+
+```sh
+inductor paths            # what it would relink
+inductor paths --write
+```
+
+It works out where a dead link meant by the tail of its own target —
+`media/cover/<creator>/<stem>.png` names the same file under the new root as it
+did under the old one — and leaves anything it cannot account for exactly as it
+is, listed under `dangling`. Read that list: a link whose target never existed
+is a different problem from a link whose library moved.
+
 `video:` is the container a recording arrived in, kept beside the `audio:`
 extracted from it. Only the item page shows it; the player, the queue and
 anything saved offline take the audio track.

@@ -87,3 +87,42 @@ enrich:
   cover_engine: turbo       # turbo | sdxl | flux
   cover_width: 1024
   cover_height: 576
+
+# What this library calls the tags its instruments settle.
+#
+# Keys are the rule's built-in name. A bare value is taken in the same
+# namespace as the rest, a value carrying a prefix names a tag elsewhere, and
+# an empty value switches the rule off.
+#
+# Set this wherever tags.yaml already answers for a rule under another
+# spelling. Two spellings of one idea in one namespace is what the registry
+# exists to prevent, and here it costs more than untidiness: a claimed tag is
+# only ever *disputed* by a rule awarding the same string, so a ruleset
+# spelling it `Whispered` against a library spelling it `Whispers` cannot
+# contradict a single entry claiming it. The pass reads as working and has
+# nothing to say.
+#
+# measured:
+#   tags:
+#     Whispered: Whispers
+#     Wordless: No Words
+#     Sparse Speech: Minimal Speech
+#     Slow Delivery: ""
+#
+#   # Every number the rules compare against. State only what you move.
+#   # Some are instrument guards; others are judgements about the material and
+#   # want setting against your own library rather than inherited. Moving one
+#   # is recorded beside the tags it produced, because the ruleset version
+#   # cannot say under which numbers once the numbers are yours.
+#   cap: 4
+#   thresholds:
+#     windows: 3                 # spectral windows that must agree
+#     purity: 0.35               # dominant partial's share before it is a tone
+#     beat_hz: 0.5
+#     beat_windows: 3
+#     beat_span_hz: 1.5          # movement before a beat is drifting
+#     pulse_strength: 0.15
+#     whisper_hnr_db: 8
+#     slow_delivery_wpm: 70      # words a minute while actually speaking
+#     sparse_speaking_share: 0.35
+#     sparse_silence_ratio: 0.5
